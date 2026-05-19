@@ -1,0 +1,3005 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AngkorTravel</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      /* ===================== CSS VARIABLES ===================== */
+      :root {
+        --teal: #00897B;
+        --teal-light: #26A69A;
+        --teal-dark: #00695C;
+        --teal-pale: #E0F2F1;
+        --orange: #FF6F00;
+        --orange-light: #FF8F00;
+        --orange-pale: #FFF3E0;
+        --white: #FFFFFF;
+        --off-white: #F8FAFB;
+        --gray-50: #F9FAFB;
+        --gray-100: #F3F4F6;
+        --gray-200: #E5E7EB;
+        --gray-300: #D1D5DB;
+        --gray-400: #9CA3AF;
+        --gray-500: #6B7280;
+        --gray-600: #4B5563;
+        --gray-700: #374151;
+        --gray-800: #1F2937;
+        --gray-900: #111827;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.04);
+        --shadow: 0 4px 16px rgba(0,0,0,.10);
+        --shadow-md: 0 8px 32px rgba(0,0,0,.12);
+        --shadow-lg: 0 16px 48px rgba(0,0,0,.15);
+        --shadow-xl: 0 24px 64px rgba(0,0,0,.18);
+        --radius-sm: 8px;
+        --radius: 14px;
+        --radius-lg: 20px;
+        --radius-xl: 28px;
+        --radius-full: 9999px;
+        --transition: 0.25s cubic-bezier(.4,0,.2,1);
+        --font-head: 'Poppins', sans-serif;
+        --font-body: 'DM Sans', sans-serif;
+      }
+
+      /* ===================== RESET ===================== */
+      *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+      html { scroll-behavior: smooth; font-size: 16px; }
+      body {
+        font-family: var(--font-body);
+        color: var(--gray-800);
+        background: var(--white);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+      img { max-width:100%; display:block; }
+      a { text-decoration:none; color:inherit; }
+      button { cursor:pointer; border:none; background:none; font-family:inherit; }
+      ul { list-style:none; }
+      input, select { font-family:inherit; outline:none; border:none; }
+
+      /* ===================== UTILITIES ===================== */
+      .container { max-width:1280px; margin:0 auto; padding:0 24px; }
+      .container-sm { max-width:960px; margin:0 auto; padding:0 24px; }
+      .section-pad { padding: 80px 0; }
+      .section-pad-sm { padding: 60px 0; }
+
+      .section-tag {
+        display:inline-flex; align-items:center; gap:8px;
+        background: var(--teal-pale); color: var(--teal-dark);
+        font-family: var(--font-head); font-size:.75rem; font-weight:600;
+        letter-spacing:.08em; text-transform:uppercase;
+        padding:6px 14px; border-radius:var(--radius-full);
+        margin-bottom:16px;
+      }
+      .section-tag i { font-size:.85rem; }
+
+      .section-title {
+        font-family: var(--font-head);
+        font-size: clamp(1.6rem, 3vw, 2.2rem);
+        font-weight:700; color:var(--gray-900); line-height:1.25;
+        margin-bottom:10px;
+      }
+      .section-sub {
+        font-size:1rem; color:var(--gray-500); max-width:520px; line-height:1.65;
+      }
+      .section-header { margin-bottom:40px; }
+      .section-header-row {
+        display:flex; align-items:flex-end; justify-content:space-between;
+        gap:16px; margin-bottom:40px; flex-wrap:wrap;
+      }
+
+      .btn {
+        display:inline-flex; align-items:center; gap:8px;
+        padding:12px 24px; border-radius:var(--radius-full);
+        font-family:var(--font-head); font-size:.9rem; font-weight:600;
+        transition:var(--transition); white-space:nowrap;
+      }
+      .btn-primary {
+        background: var(--orange); color:var(--white);
+        box-shadow: 0 4px 16px rgba(255,111,0,.35);
+      }
+      .btn-primary:hover {
+        background: var(--orange-light);
+        box-shadow: 0 6px 24px rgba(255,111,0,.45);
+        transform: translateY(-2px);
+      }
+      .btn-teal {
+        background: var(--teal); color:var(--white);
+        box-shadow: 0 4px 16px rgba(0,137,123,.3);
+      }
+      .btn-teal:hover {
+        background: var(--teal-dark);
+        box-shadow: 0 6px 24px rgba(0,137,123,.4);
+        transform: translateY(-2px);
+      }
+      .btn-outline {
+        border:2px solid var(--teal); color:var(--teal);
+      }
+      .btn-outline:hover { background:var(--teal); color:var(--white); }
+      .btn-ghost { color:var(--teal); }
+      .btn-ghost:hover { background:var(--teal-pale); }
+      .btn-sm { padding:8px 18px; font-size:.82rem; }
+      .btn-lg { padding:15px 32px; font-size:1rem; }
+      .btn-view-all { color:var(--teal); font-weight:600; font-size:.9rem; display:inline-flex; align-items:center; gap:6px; }
+      .btn-view-all:hover { color:var(--teal-dark); }
+      .btn-view-all i { font-size:.75rem; }
+
+      /* ===================== ANIMATIONS ===================== */
+      @keyframes fadeInUp {
+        from { opacity:0; transform:translateY(28px); }
+        to { opacity:1; transform:translateY(0); }
+      }
+      @keyframes fadeInLeft {
+        from { opacity:0; transform:translateX(-28px); }
+        to { opacity:1; transform:translateX(0); }
+      }
+      @keyframes fadeInRight {
+        from { opacity:0; transform:translateX(28px); }
+        to { opacity:1; transform:translateX(0); }
+      }
+      @keyframes scaleIn {
+        from { opacity:0; transform:scale(.94); }
+        to { opacity:1; transform:scale(1); }
+      }
+      @keyframes pulse-ring {
+        0% { transform:scale(.85); opacity:.7; }
+        70% { transform:scale(1.3); opacity:0; }
+        100% { transform:scale(.85); opacity:0; }
+      }
+      @keyframes float {
+        0%,100% { transform:translateY(0); }
+        50% { transform:translateY(-12px); }
+      }
+      @keyframes ticker {
+        0% { transform:translateX(0); }
+        100% { transform:translateX(-50%); }
+      }
+      @keyframes countdown-tick {
+        0%,100% { transform:translateY(0); }
+        25% { transform:translateY(-2px); }
+        75% { transform:translateY(2px); }
+      }
+
+      .animate { opacity:0; }
+      .animate.visible {
+        animation: fadeInUp .55s cubic-bezier(.4,0,.2,1) forwards;
+      }
+      .animate-delay-1.visible { animation-delay:.1s; }
+      .animate-delay-2.visible { animation-delay:.2s; }
+      .animate-delay-3.visible { animation-delay:.3s; }
+      .animate-delay-4.visible { animation-delay:.4s; }
+
+      /* ===================== NAVBAR ===================== */
+      #navbar {
+        position: fixed; top:0; left:0; right:0; z-index:1000;
+        transition: var(--transition);
+      }
+      #navbar.transparent {
+        background: transparent;
+      }
+      #navbar.scrolled {
+        background: rgba(255,255,255,.97);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        box-shadow: 0 2px 24px rgba(0,0,0,.08);
+      }
+      .nav-inner {
+        display:flex; align-items:center; gap:8px;
+        height:68px; padding:0 24px; max-width:1280px; margin:0 auto;
+      }
+      .nav-logo {
+        display:flex; align-items:center; gap:10px;
+        font-family:var(--font-head); font-weight:800;
+        font-size:1.3rem; color:var(--white); letter-spacing:-.02em;
+        flex-shrink:0; margin-right:8px;
+      }
+      #navbar.scrolled .nav-logo { color:var(--teal-dark); }
+      .nav-logo-icon {
+        width:36px; height:36px; background:var(--orange);
+        border-radius:10px; display:flex; align-items:center; justify-content:center;
+        font-size:1rem; color:var(--white);
+      }
+      .nav-links {
+        display:flex; align-items:center; gap:4px; flex:1;
+      }
+      .nav-links a {
+        font-size:.87rem; font-weight:500; padding:8px 12px;
+        border-radius:var(--radius-sm);
+        color: rgba(255,255,255,.9); transition:var(--transition);
+      }
+      #navbar.scrolled .nav-links a { color:var(--gray-600); }
+      .nav-links a:hover {
+        background: rgba(255,255,255,.15); color:var(--white);
+      }
+      #navbar.scrolled .nav-links a:hover { background:var(--teal-pale); color:var(--teal); }
+      .nav-actions {
+        display:flex; align-items:center; gap:8px; margin-left:auto;
+      }
+      .nav-select {
+        background:transparent; color:rgba(255,255,255,.85);
+        font-size:.82rem; font-weight:500;
+        padding:6px 10px; border-radius:var(--radius-sm);
+        border:1px solid rgba(255,255,255,.2);
+        cursor:pointer; appearance:none;
+        transition:var(--transition);
+      }
+      #navbar.scrolled .nav-select { color:var(--gray-600); border-color:var(--gray-200); }
+      .nav-sign { font-size:.85rem; font-weight:500; color:rgba(255,255,255,.85); padding:7px 14px; border-radius:var(--radius-sm); transition:var(--transition); }
+      #navbar.scrolled .nav-sign { color:var(--gray-600); }
+      .nav-sign:hover { background:rgba(255,255,255,.15); }
+      #navbar.scrolled .nav-sign:hover { background:var(--gray-100); }
+      .nav-register {
+        background:var(--orange); color:var(--white) !important;
+        font-size:.85rem; font-weight:600; padding:8px 18px;
+        border-radius:var(--radius-full); transition:var(--transition);
+      }
+      .nav-register:hover { background:var(--orange-light); transform:translateY(-1px); }
+      .hamburger {
+        display:none; flex-direction:column; gap:5px;
+        padding:8px; cursor:pointer; border-radius:var(--radius-sm);
+      }
+      .hamburger span {
+        display:block; width:24px; height:2px;
+        background:var(--white); border-radius:2px; transition:var(--transition);
+      }
+      #navbar.scrolled .hamburger span { background:var(--gray-700); }
+      .hamburger.open span:nth-child(1) { transform:rotate(45deg) translate(5px,5px); }
+      .hamburger.open span:nth-child(2) { opacity:0; }
+      .hamburger.open span:nth-child(3) { transform:rotate(-45deg) translate(5px,-5px); }
+
+      /* Mobile nav */
+      .mobile-nav {
+        display:none; position:fixed; top:68px; left:0; right:0; z-index:999;
+        background:var(--white); box-shadow:var(--shadow-lg);
+        padding:16px; flex-direction:column; gap:4px;
+        animation: fadeInUp .25s ease;
+      }
+      .mobile-nav.open { display:flex; }
+      .mobile-nav a {
+        display:block; padding:12px 16px; border-radius:var(--radius);
+        font-weight:500; color:var(--gray-700); transition:var(--transition);
+      }
+      .mobile-nav a:hover { background:var(--teal-pale); color:var(--teal); }
+      .mobile-nav-actions {
+        display:flex; gap:8px; padding:12px 16px 4px; border-top:1px solid var(--gray-100); margin-top:4px;
+      }
+
+      /* ===================== HERO ===================== */
+      #hero {
+        position:relative; min-height:100vh;
+        display:flex; align-items:center; overflow:hidden;
+        padding-top:68px;
+      }
+      .hero-bg {
+        position:absolute; inset:0; z-index:0;
+      }
+      .hero-bg-img {
+        position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+        background: linear-gradient(135deg, #00695C 0%, #004D40 40%, #1A237E 100%);
+      }
+      /* Gradient overlay */
+      .hero-bg::after {
+        content:''; position:absolute; inset:0;
+        background: linear-gradient(
+          115deg,
+          rgba(0,50,45,.88) 0%,
+          rgba(0,60,50,.72) 40%,
+          rgba(0,30,60,.55) 100%
+        );
+      }
+      /* Abstract shapes */
+      .hero-shape {
+        position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; z-index:1;
+      }
+      .hero-shape-1 {
+        width:600px; height:600px; top:-150px; right:-100px;
+        background: radial-gradient(circle, rgba(255,111,0,.25), transparent 70%);
+        animation: float 8s ease-in-out infinite;
+      }
+      .hero-shape-2 {
+        width:400px; height:400px; bottom:-100px; left:30%;
+        background: radial-gradient(circle, rgba(0,137,123,.3), transparent 70%);
+        animation: float 10s ease-in-out infinite reverse;
+      }
+
+      .hero-content {
+        position:relative; z-index:2;
+        width:100%; max-width:1280px; margin:0 auto; padding:60px 24px;
+        display:grid; grid-template-columns:1fr 480px; gap:60px; align-items:center;
+      }
+
+      .hero-left { animation: fadeInLeft .7s ease forwards; }
+      .hero-eyebrow {
+        display:inline-flex; align-items:center; gap:10px;
+        background:rgba(255,255,255,.15); backdrop-filter:blur(8px);
+        border:1px solid rgba(255,255,255,.2); border-radius:var(--radius-full);
+        padding:7px 16px; margin-bottom:24px;
+        font-size:.82rem; font-weight:600; color:var(--white); letter-spacing:.06em;
+      }
+      .hero-eyebrow .dot { width:8px; height:8px; background:var(--orange); border-radius:50%; animation:pulse-ring 2s ease infinite; }
+      .hero-title {
+        font-family:var(--font-head); font-size:clamp(2.6rem,5vw,4rem);
+        font-weight:900; color:var(--white); line-height:1.12;
+        margin-bottom:20px; letter-spacing:-.03em;
+      }
+      .hero-title span { color:var(--orange); }
+      .hero-subtitle {
+        font-size:1.08rem; color:rgba(255,255,255,.8); line-height:1.7;
+        max-width:440px; margin-bottom:36px;
+      }
+      .hero-ctas { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:48px; }
+      .hero-stats {
+        display:flex; gap:36px; flex-wrap:wrap;
+      }
+      .hero-stat .num {
+        font-family:var(--font-head); font-size:1.6rem; font-weight:800; color:var(--white);
+      }
+      .hero-stat .lbl { font-size:.8rem; color:rgba(255,255,255,.6); margin-top:2px; }
+
+      /* Hero search box */
+      .hero-right { animation: fadeInRight .7s .15s ease both; }
+      .search-card {
+        background:rgba(255,255,255,.12);
+        backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+        border:1px solid rgba(255,255,255,.22);
+        border-radius:var(--radius-xl); padding:28px; box-shadow:var(--shadow-xl);
+      }
+      .search-tabs {
+        display:flex; gap:4px; margin-bottom:24px; flex-wrap:wrap;
+      }
+      .search-tab {
+        display:flex; align-items:center; gap:7px;
+        padding:8px 14px; border-radius:var(--radius-full);
+        font-size:.82rem; font-weight:600; color:rgba(255,255,255,.75);
+        transition:var(--transition); cursor:pointer; border:1px solid transparent;
+      }
+      .search-tab:hover { color:var(--white); border-color:rgba(255,255,255,.25); }
+      .search-tab.active {
+        background:var(--orange); color:var(--white);
+        box-shadow:0 4px 12px rgba(255,111,0,.4);
+      }
+      .search-tab i { font-size:.8rem; }
+
+      .search-form { display:none; flex-direction:column; gap:12px; }
+      .search-form.active { display:flex; }
+      .search-form-row { display:grid; gap:12px; }
+      .search-form-row.cols-2 { grid-template-columns:1fr 1fr; }
+
+      .form-field {
+        background:rgba(255,255,255,.95);
+        border-radius:var(--radius); padding:12px 16px;
+        border:1.5px solid transparent; transition:var(--transition);
+      }
+      .form-field:focus-within { border-color:var(--orange); box-shadow:0 0 0 3px rgba(255,111,0,.15); }
+      .form-field label {
+        display:block; font-size:.7rem; font-weight:700;
+        color:var(--gray-400); letter-spacing:.07em; text-transform:uppercase; margin-bottom:4px;
+      }
+      .form-field input, .form-field select {
+        width:100%; font-size:.92rem; font-weight:500; color:var(--gray-800);
+        background:transparent;
+      }
+      .form-field input::placeholder { color:var(--gray-400); }
+
+      .search-btn {
+        width:100%; padding:15px; border-radius:var(--radius);
+        background: linear-gradient(135deg, var(--orange), var(--orange-light));
+        color:var(--white); font-family:var(--font-head); font-size:1rem; font-weight:700;
+        display:flex; align-items:center; justify-content:center; gap:10px;
+        box-shadow: 0 6px 24px rgba(255,111,0,.4);
+        transition:var(--transition);
+      }
+      .search-btn:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,111,0,.5); }
+      .search-btn i { font-size:1.1rem; }
+
+      /* Scroll cue */
+      .hero-scroll {
+        position:absolute; bottom:32px; left:50%; transform:translateX(-50%);
+        z-index:2; display:flex; flex-direction:column; align-items:center; gap:8px;
+        color:rgba(255,255,255,.5); font-size:.75rem; font-weight:500;
+        animation: float 3s ease-in-out infinite;
+      }
+      .hero-scroll i { font-size:1.2rem; }
+
+      /* ===================== ANNOUNCEMENT TICKER ===================== */
+      .ticker-bar {
+        background: linear-gradient(90deg, var(--teal-dark), var(--teal));
+        padding:10px 0; overflow:hidden;
+      }
+      .ticker-track {
+        display:flex; width:max-content;
+        animation: ticker 30s linear infinite;
+      }
+      .ticker-item {
+        display:flex; align-items:center; gap:8px;
+        font-size:.82rem; font-weight:500; color:rgba(255,255,255,.9);
+        padding:0 40px; white-space:nowrap;
+      }
+      .ticker-item i { color:var(--orange); }
+
+      /* ===================== QUICK SERVICES ===================== */
+      #services { background:var(--white); }
+      .services-grid {
+        display:grid; grid-template-columns:repeat(8,1fr); gap:12px;
+      }
+      .service-card {
+        display:flex; flex-direction:column; align-items:center; gap:12px;
+        padding:24px 12px; border-radius:var(--radius-lg);
+        background:var(--gray-50); border:1.5px solid var(--gray-100);
+        cursor:pointer; transition:var(--transition); text-align:center;
+      }
+      .service-card:hover {
+        border-color:var(--teal-light); background:var(--teal-pale);
+        transform:translateY(-4px); box-shadow:var(--shadow-md);
+      }
+      .service-icon {
+        width:52px; height:52px; border-radius:var(--radius);
+        display:flex; align-items:center; justify-content:center;
+        font-size:1.3rem; transition:var(--transition);
+      }
+      .service-card:hover .service-icon { transform:scale(1.1); }
+      .s1 .service-icon { background:#E0F7FA; color:#0097A7; }
+      .s2 .service-icon { background:#E8EAF6; color:#3949AB; }
+      .s3 .service-icon { background:#FFF3E0; color:#E65100; }
+      .s4 .service-icon { background:#E1F5FE; color:#0277BD; }
+      .s5 .service-icon { background:#F3E5F5; color:#7B1FA2; }
+      .s6 .service-icon { background:#E8F5E9; color:#2E7D32; }
+      .s7 .service-icon { background:#FCE4EC; color:#C62828; }
+      .s8 .service-icon { background:#FFF8E1; color:#F57F17; }
+      .service-name { font-size:.8rem; font-weight:600; color:var(--gray-700); }
+
+      /* ===================== DESTINATIONS ===================== */
+      #destinations { background:var(--off-white); }
+      .destinations-grid {
+        display:grid; grid-template-columns:repeat(3,1fr); gap:20px;
+      }
+      .dest-card {
+        position:relative; border-radius:var(--radius-xl); overflow:hidden;
+        cursor:pointer;box-shadow:var(--shadow);
+        transition:var(--transition);
+      }
+      .dest-card:hover { transform:translateY(-6px); box-shadow:var(--shadow-xl); }
+      .dest-card-img {
+        width:100%; aspect-ratio:4/3; object-fit:cover;
+        transition: transform .5s cubic-bezier(.4,0,.2,1);
+        background: linear-gradient(135deg, #1a6b5e, #2d4d6e);
+      }
+      .dest-card:hover .dest-card-img { transform:scale(1.07); }
+      .dest-card-overlay {
+        position:absolute; inset:0;
+        background: linear-gradient(to top, rgba(0,0,0,.72) 0%, rgba(0,0,0,.1) 50%, transparent 100%);
+      }
+      .dest-card-body {
+        position:absolute; bottom:0; left:0; right:0; padding:20px;
+      }
+      .dest-tag {
+        display:inline-block; background:var(--orange); color:var(--white);
+        font-size:.7rem; font-weight:700; padding:3px 10px; border-radius:var(--radius-full);
+        margin-bottom:8px;
+      }
+      .dest-name {
+        font-family:var(--font-head); font-size:1.3rem; font-weight:700;
+        color:var(--white); line-height:1.2; margin-bottom:6px;
+      }
+      .dest-desc { font-size:.82rem; color:rgba(255,255,255,.75); margin-bottom:12px; }
+      .dest-footer {
+        display:flex; align-items:center; justify-content:space-between;
+      }
+      .dest-price { font-size:.82rem; color:rgba(255,255,255,.7); }
+      .dest-price strong { font-size:1.1rem; font-weight:700; color:var(--white); }
+      .dest-explore {
+        display:flex; align-items:center; gap:6px; font-size:.8rem; font-weight:600;
+        color:var(--white); background:rgba(255,255,255,.2); backdrop-filter:blur(8px);
+        padding:7px 14px; border-radius:var(--radius-full);
+        transition:var(--transition);
+      }
+      .dest-card:hover .dest-explore { background:var(--orange); }
+
+      /* Dest images using gradient placeholders with icons */
+      .dest-bg-1 { background: linear-gradient(135deg, #2D4A3E 0%, #1a3028 100%); }
+      .dest-bg-2 { background: linear-gradient(135deg, #1a2e4a 0%, #2d3e5f 100%); }
+      .dest-bg-3 { background: linear-gradient(135deg, #1E4D6B 0%, #0d3352 100%); }
+      .dest-bg-4 { background: linear-gradient(135deg, #3D5A47 0%, #1f3b2a 100%); }
+      .dest-bg-5 { background: linear-gradient(135deg, #4A3728 0%, #2d1f15 100%); }
+      .dest-bg-6 { background: linear-gradient(135deg, #2E3B5E 0%, #1a2440 100%); }
+
+      .dest-illus {
+        width:100%; aspect-ratio:4/3;
+        display:flex; align-items:center; justify-content:center;
+        position:relative; overflow:hidden;
+        transition: transform .5s cubic-bezier(.4,0,.2,1);
+      }
+      .dest-card:hover .dest-illus { transform:scale(1.07); }
+      .dest-illus-icon { font-size:5rem; opacity:.3; }
+
+      /* ===================== TRAVEL PLANS ===================== */
+      #plans { background:var(--white); }
+      .plan-filters {
+        display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px;
+      }
+      .plan-filter {
+        padding:8px 18px; border-radius:var(--radius-full);
+        font-size:.84rem; font-weight:600; border:1.5px solid var(--gray-200);
+        color:var(--gray-600); cursor:pointer; transition:var(--transition);
+      }
+      .plan-filter:hover { border-color:var(--teal); color:var(--teal); }
+      .plan-filter.active { background:var(--teal); color:var(--white); border-color:var(--teal); }
+
+      .plans-scroll {
+        display:grid; grid-template-columns:repeat(3, 380px); gap:20px;
+        overflow-x:auto; padding-bottom:12px; cursor:grab;
+        scrollbar-width:thin; scrollbar-color:var(--gray-300) transparent;
+      }
+      .plans-scroll::-webkit-scrollbar { height:4px; }
+      .plans-scroll::-webkit-scrollbar-thumb { background:var(--gray-300); border-radius:4px; }
+
+      .plan-card {
+        background:var(--white); border-radius:var(--radius-xl);
+        box-shadow:var(--shadow); border:1.5px solid var(--gray-100);
+        overflow:hidden; transition:var(--transition); flex-shrink:0;
+      }
+      .plan-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); border-color:var(--teal-light); }
+      .plan-img {
+        height:200px; width:100%; object-fit:cover; position:relative; overflow:hidden;
+      }
+      .plan-img-bg {
+        height:200px; width:100%; display:flex; align-items:center; justify-content:center;
+        font-size:4rem; position:relative;
+      }
+      .plan-badges {
+        position:absolute; top:14px; left:14px; display:flex; gap:6px; flex-wrap:wrap;
+      }
+      .badge {
+        display:inline-flex; align-items:center; gap:4px;
+        font-size:.7rem; font-weight:700; padding:4px 10px; border-radius:var(--radius-full);
+      }
+      .badge-days { background:var(--orange); color:var(--white); }
+      .badge-hotel { background:rgba(0,137,123,.9); color:var(--white); }
+      .badge-transport { background:rgba(0,100,150,.9); color:var(--white); }
+      .badge-luxury { background:rgba(180,130,30,.9); color:var(--white); }
+
+      .plan-body { padding:20px; }
+      .plan-type {
+        font-size:.7rem; font-weight:700; color:var(--teal); letter-spacing:.08em;
+        text-transform:uppercase; margin-bottom:6px;
+      }
+      .plan-name {
+        font-family:var(--font-head); font-size:1.1rem; font-weight:700;
+        color:var(--gray-900); margin-bottom:10px; line-height:1.3;
+      }
+
+      .plan-timeline {
+        display:flex; gap:0; margin-bottom:14px; overflow:hidden;
+      }
+      .plan-day {
+        flex:1; padding:7px 8px;
+        background:var(--gray-50); border-right:1px solid var(--gray-100);
+        text-align:center;
+      }
+      .plan-day:first-child { border-radius:var(--radius-sm) 0 0 var(--radius-sm); }
+      .plan-day:last-child { border-right:none; border-radius:0 var(--radius-sm) var(--radius-sm) 0; }
+      .plan-day-num { font-size:.65rem; font-weight:700; color:var(--gray-400); }
+      .plan-day-loc { font-size:.72rem; font-weight:600; color:var(--gray-700); }
+
+      .plan-includes {
+        display:flex; gap:6px; flex-wrap:wrap; margin-bottom:16px;
+      }
+      .plan-include {
+        display:flex; align-items:center; gap:4px;
+        font-size:.75rem; color:var(--gray-600); background:var(--gray-50);
+        padding:4px 10px; border-radius:var(--radius-full);
+      }
+      .plan-include i { font-size:.7rem; color:var(--teal); }
+
+      .plan-footer {
+        display:flex; align-items:center; justify-content:space-between;
+        padding-top:14px; border-top:1px solid var(--gray-100);
+      }
+      .plan-price-label { font-size:.72rem; color:var(--gray-400); }
+      .plan-price { font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--orange); }
+      .plan-price span { font-size:.75rem; font-weight:500; color:var(--gray-400); }
+
+      /* ===================== FLASH DEALS ===================== */
+      #deals { background: linear-gradient(135deg, var(--teal-dark) 0%, #004D40 100%); position:relative; overflow:hidden; }
+      #deals::before {
+        content:''; position:absolute; inset:0;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      }
+      #deals .section-tag { background:rgba(255,255,255,.15); color:var(--white); }
+      #deals .section-title { color:var(--white); }
+      #deals .section-sub { color:rgba(255,255,255,.7); }
+
+      .countdown-bar {
+        display:flex; align-items:center; gap:16px; margin-bottom:32px; flex-wrap:wrap;
+      }
+      .countdown-label { font-size:.85rem; font-weight:600; color:rgba(255,255,255,.7); }
+      .countdown-timer { display:flex; align-items:center; gap:6px; }
+      .countdown-unit {
+        display:flex; flex-direction:column; align-items:center;
+        background:rgba(255,255,255,.12); border-radius:var(--radius-sm);
+        padding:8px 12px; min-width:50px;
+      }
+      .countdown-num {
+        font-family:var(--font-head); font-size:1.4rem; font-weight:800;
+        color:var(--white); line-height:1;
+      }
+      .countdown-lbl { font-size:.6rem; color:rgba(255,255,255,.5); font-weight:600; margin-top:3px; }
+      .countdown-sep { font-size:1.2rem; font-weight:700; color:var(--orange); margin-bottom:4px; }
+
+      .deals-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+      .deal-card {
+        background:rgba(255,255,255,.08); backdrop-filter:blur(12px);
+        border:1px solid rgba(255,255,255,.12);
+        border-radius:var(--radius-xl); overflow:hidden;
+        transition:var(--transition); cursor:pointer;
+      }
+      .deal-card:hover { background:rgba(255,255,255,.14); transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,0,0,.3); }
+      .deal-img-wrap { position:relative; }
+      .deal-img-bg {
+        height:180px; display:flex; align-items:center; justify-content:center;
+        font-size:3.5rem; position:relative;
+      }
+      .deal-d1 { background: linear-gradient(135deg, #1a4a3a, #0d3028); }
+      .deal-d2 { background: linear-gradient(135deg, #1a2e4a, #0d1f35); }
+      .deal-d3 { background: linear-gradient(135deg, #1E4D6B, #0d2d45); }
+      .deal-d4 { background: linear-gradient(135deg, #3d2a4a, #221533); }
+      .deal-d5 { background: linear-gradient(135deg, #2e1a1a, #1a0d0d); }
+      .deal-d6 { background: linear-gradient(135deg, #1a3d1a, #0d2a0d); }
+
+      .discount-badge {
+        position:absolute; top:12px; right:12px;
+        background: linear-gradient(135deg, var(--orange), #FF8500);
+        color:var(--white); font-family:var(--font-head); font-size:1rem; font-weight:900;
+        padding:8px 12px; border-radius:var(--radius);
+        box-shadow:0 4px 12px rgba(255,111,0,.5);
+      }
+      .deal-body { padding:18px; }
+      .deal-name {
+        font-family:var(--font-head); font-size:1rem; font-weight:700;
+        color:var(--white); margin-bottom:8px; line-height:1.3;
+      }
+      .deal-rating {
+        display:flex; align-items:center; gap:6px; margin-bottom:10px;
+      }
+      .stars { display:flex; gap:2px; }
+      .stars i { font-size:.75rem; color:#FFD700; }
+      .deal-rating-num { font-size:.82rem; font-weight:700; color:rgba(255,255,255,.9); }
+      .deal-rating-cnt { font-size:.75rem; color:rgba(255,255,255,.5); }
+      .deal-price-row {
+        display:flex; align-items:baseline; gap:8px; margin-bottom:12px;
+      }
+      .deal-old { font-size:.85rem; color:rgba(255,255,255,.4); text-decoration:line-through; }
+      .deal-new { font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--orange); }
+      .deal-new span { font-size:.75rem; color:rgba(255,255,255,.5); font-weight:400; }
+      .deal-book {
+        width:100%; padding:10px; border-radius:var(--radius);
+        background:rgba(255,255,255,.15); color:var(--white);
+        font-family:var(--font-head); font-size:.85rem; font-weight:700;
+        transition:var(--transition);
+      }
+      .deal-book:hover { background:var(--orange); }
+
+      /* ===================== HOTELS ===================== */
+      #hotels { background:var(--off-white); }
+      .hotels-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+      .hotel-card {
+        background:var(--white); border-radius:var(--radius-xl); overflow:hidden;
+        box-shadow:var(--shadow); border:1px solid var(--gray-100);
+        transition:var(--transition);
+      }
+      .hotel-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+      .hotel-img-wrap { position:relative; }
+      .hotel-img-bg {
+        height:190px; display:flex; align-items:center; justify-content:center; font-size:3.5rem;
+      }
+      .h1 { background: linear-gradient(135deg, #1a3d2e, #0d2a1e); }
+      .h2 { background: linear-gradient(135deg, #1a2e4a, #0d1f35); }
+      .h3 { background: linear-gradient(135deg, #3d2a1a, #2a1a0d); }
+      .h4 { background: linear-gradient(135deg, #2a1a3d, #1a0d2a); }
+      .h5 { background: linear-gradient(135deg, #1a3a1a, #0d2a0d); }
+      .h6 { background: linear-gradient(135deg, #3d1a1a, #2a0d0d); }
+      .hotel-save {
+        position:absolute; top:12px; right:12px;
+        width:34px; height:34px; border-radius:50%;
+        background:rgba(255,255,255,.9); display:flex; align-items:center; justify-content:center;
+        font-size:.85rem; color:var(--gray-400); transition:var(--transition); cursor:pointer;
+      }
+      .hotel-save:hover { color:#EF5350; background:var(--white); }
+      .hotel-body { padding:18px; }
+      .hotel-stars { display:flex; gap:2px; margin-bottom:6px; }
+      .hotel-stars i { font-size:.7rem; color:#FFD700; }
+      .hotel-name {
+        font-family:var(--font-head); font-size:1rem; font-weight:700;
+        color:var(--gray-900); margin-bottom:6px; line-height:1.3;
+      }
+      .hotel-loc { display:flex; align-items:center; gap:5px; font-size:.8rem; color:var(--gray-500); margin-bottom:10px; }
+      .hotel-loc i { font-size:.75rem; color:var(--teal); }
+      .hotel-amenities { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:14px; }
+      .hotel-amenity {
+        display:flex; align-items:center; gap:4px;
+        font-size:.72rem; color:var(--gray-500);
+        background:var(--gray-50); padding:3px 9px; border-radius:var(--radius-full);
+      }
+      .hotel-amenity i { font-size:.68rem; color:var(--teal-light); }
+      .hotel-footer {
+        display:flex; align-items:center; justify-content:space-between;
+        padding-top:12px; border-top:1px solid var(--gray-100);
+      }
+      .hotel-rating-box { display:flex; align-items:center; gap:8px; }
+      .hotel-score {
+        background:var(--teal); color:var(--white);
+        font-family:var(--font-head); font-size:.85rem; font-weight:800;
+        padding:5px 9px; border-radius:var(--radius-sm);
+      }
+      .hotel-verdict { font-size:.78rem; font-weight:600; color:var(--gray-700); }
+      .hotel-reviews { font-size:.72rem; color:var(--gray-400); }
+      .hotel-price-wrap { text-align:right; }
+      .hotel-price-from { font-size:.7rem; color:var(--gray-400); }
+      .hotel-price { font-family:var(--font-head); font-size:1.15rem; font-weight:800; color:var(--orange); }
+      .hotel-price-night { font-size:.72rem; color:var(--gray-400); }
+
+      /* ===================== TOURS ===================== */
+      #tours { background:var(--white); }
+      .tours-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+      .tour-card {
+        border-radius:var(--radius-xl); overflow:hidden;
+        background:var(--white); box-shadow:var(--shadow);
+        border:1px solid var(--gray-100); transition:var(--transition);
+      }
+      .tour-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
+      .tour-img-bg {
+        height:200px; display:flex; align-items:center; justify-content:center; font-size:4rem;
+        position:relative;
+      }
+      .t1 { background: linear-gradient(135deg, #2D4A3E, #1a3028); }
+      .t2 { background: linear-gradient(135deg, #2a3d1a, #1a2a0d); }
+      .t3 { background: linear-gradient(135deg, #1E4D6B, #0d2d45); }
+      .t4 { background: linear-gradient(135deg, #4a2d1a, #2d1a0d); }
+      .t5 { background: linear-gradient(135deg, #2d1a3d, #1a0d2a); }
+      .t6 { background: linear-gradient(135deg, #1a3d3d, #0d2a2a); }
+      .tour-cat {
+        position:absolute; top:12px; left:12px;
+        background:rgba(0,0,0,.5); backdrop-filter:blur(6px);
+        color:var(--white); font-size:.72rem; font-weight:700;
+        padding:4px 10px; border-radius:var(--radius-full);
+      }
+      .tour-body { padding:18px; }
+      .tour-name {
+        font-family:var(--font-head); font-size:1rem; font-weight:700;
+        color:var(--gray-900); margin-bottom:8px; line-height:1.3;
+      }
+      .tour-meta { display:flex; gap:14px; margin-bottom:12px; }
+      .tour-meta-item { display:flex; align-items:center; gap:5px; font-size:.78rem; color:var(--gray-500); }
+      .tour-meta-item i { color:var(--teal); font-size:.75rem; }
+      .tour-footer {
+        display:flex; align-items:center; justify-content:space-between;
+        padding-top:12px; border-top:1px solid var(--gray-100);
+      }
+      .tour-rating { display:flex; align-items:center; gap:5px; }
+      .tour-rating .stars i { font-size:.7rem; }
+      .tour-rating-num { font-size:.82rem; font-weight:700; color:var(--gray-700); }
+      .tour-price { font-family:var(--font-head); font-size:1.1rem; font-weight:800; color:var(--orange); }
+      .tour-price span { font-size:.72rem; font-weight:400; color:var(--gray-400); }
+
+      /* ===================== FOOD ===================== */
+      #food { background:var(--gray-50); }
+      .food-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+      .food-card {
+        border-radius:var(--radius-lg); overflow:hidden; background:var(--white);
+        box-shadow:var(--shadow-sm); border:1px solid var(--gray-100);
+        cursor:pointer; transition:var(--transition);
+      }
+      .food-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+      .food-img {
+        height:150px; display:flex; align-items:center; justify-content:center; font-size:3.5rem;
+      }
+      .f1 { background: linear-gradient(135deg, #4a2d1a, #2d1a0d); }
+      .f2 { background: linear-gradient(135deg, #3d1a1a, #2a0d0d); }
+      .f3 { background: linear-gradient(135deg, #2d3d1a, #1a2a0d); }
+      .f4 { background: linear-gradient(135deg, #3d2a1a, #2a1a0d); }
+      .food-body { padding:14px; }
+      .food-name { font-family:var(--font-head); font-size:.92rem; font-weight:700; color:var(--gray-900); margin-bottom:4px; }
+      .food-desc { font-size:.78rem; color:var(--gray-500); line-height:1.5; }
+
+      /* ===================== APP SECTION ===================== */
+      #app-section { background: linear-gradient(135deg, #002C26 0%, #004D40 50%, #00695C 100%); position:relative; overflow:hidden; }
+      #app-section::before {
+        content:''; position:absolute; inset:0;
+        background: radial-gradient(ellipse at 80% 50%, rgba(255,111,0,.12), transparent 70%);
+      }
+      .app-content {
+        display:grid; grid-template-columns:1fr 1fr; gap:80px;
+        align-items:center; position:relative; z-index:1;
+      }
+      .app-text .section-tag { background:rgba(255,255,255,.12); color:rgba(255,255,255,.85); }
+      .app-text .section-title { color:var(--white); }
+      .app-text .section-sub { color:rgba(255,255,255,.65); }
+      .app-features { display:flex; flex-direction:column; gap:14px; margin:28px 0 36px; }
+      .app-feature {
+        display:flex; align-items:flex-start; gap:14px;
+      }
+      .app-feature-icon {
+        width:40px; height:40px; border-radius:var(--radius-sm);
+        background:rgba(255,255,255,.1); display:flex; align-items:center; justify-content:center;
+        font-size:.95rem; color:var(--orange); flex-shrink:0;
+      }
+      .app-feature-text strong {
+        display:block; font-family:var(--font-head); font-weight:700;
+        color:var(--white); font-size:.92rem; margin-bottom:2px;
+      }
+      .app-feature-text span { font-size:.8rem; color:rgba(255,255,255,.55); }
+      .app-download-btns { display:flex; gap:12px; flex-wrap:wrap; }
+      .app-store-btn {
+        display:flex; align-items:center; gap:10px;
+        background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2);
+        border-radius:var(--radius); padding:12px 20px;
+        color:var(--white); transition:var(--transition);
+      }
+      .app-store-btn:hover { background:rgba(255,255,255,.18); transform:translateY(-2px); }
+      .app-store-btn i { font-size:1.5rem; }
+      .app-store-btn .line1 { font-size:.65rem; color:rgba(255,255,255,.6); }
+      .app-store-btn .line2 { font-family:var(--font-head); font-size:.9rem; font-weight:700; }
+
+      .app-visual {
+        display:flex; align-items:center; justify-content:center; gap:32px;
+      }
+      .app-mockup {
+        width:160px; border-radius:24px; overflow:hidden;
+        background: linear-gradient(160deg, rgba(255,255,255,.1), rgba(255,255,255,.05));
+        border:1px solid rgba(255,255,255,.15);
+        aspect-ratio:.47; display:flex; align-items:center; justify-content:center;
+        font-size:4rem; animation:float 5s ease-in-out infinite;
+        box-shadow:0 24px 60px rgba(0,0,0,.4);
+      }
+      .app-mockup.delay { animation-delay:1s; }
+      .qr-wrap {
+        background:var(--white); border-radius:var(--radius); padding:16px;
+        display:flex; flex-direction:column; align-items:center; gap:10px;
+        box-shadow:var(--shadow-md);
+      }
+      .qr-code {
+        width:100px; height:100px;
+        background: repeating-conic-gradient(var(--gray-900) 0% 25%, transparent 0% 50%) 0 0 / 10px 10px;
+        border-radius:var(--radius-sm);
+      }
+      .qr-label { font-size:.72rem; font-weight:700; color:var(--gray-600); text-align:center; }
+
+      /* ===================== WHY US ===================== */
+      #why { background:var(--white); }
+      .why-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+      .why-card {
+        padding:32px 24px; border-radius:var(--radius-xl);
+        background:var(--gray-50); border:1.5px solid var(--gray-100);
+        text-align:center; transition:var(--transition);
+      }
+      .why-card:hover { border-color:var(--teal-light); background:var(--teal-pale); transform:translateY(-4px); box-shadow:var(--shadow-md); }
+      .why-icon {
+        width:60px; height:60px; border-radius:var(--radius-lg);
+        display:flex; align-items:center; justify-content:center;
+        font-size:1.4rem; margin:0 auto 16px;
+      }
+      .w1 .why-icon { background:#E0F7FA; color:#0097A7; }
+      .w2 .why-icon { background:#E8F5E9; color:#2E7D32; }
+      .w3 .why-icon { background:#FFF3E0; color:#E65100; }
+      .w4 .why-icon { background:#F3E5F5; color:#7B1FA2; }
+      .why-title { font-family:var(--font-head); font-size:1rem; font-weight:700; color:var(--gray-900); margin-bottom:8px; }
+      .why-desc { font-size:.83rem; color:var(--gray-500); line-height:1.65; }
+
+      /* ===================== FOOTER ===================== */
+      #footer {
+        background: linear-gradient(180deg, #0D1F1B 0%, #071510 100%);
+        color:rgba(255,255,255,.6);
+      }
+      .footer-top { padding:64px 0 40px; }
+      .footer-grid {
+        display:grid; grid-template-columns:2fr 1fr 1fr 1fr 1fr; gap:40px;
+      }
+      .footer-brand { max-width:280px; }
+      .footer-logo {
+        display:flex; align-items:center; gap:10px;
+        font-family:var(--font-head); font-weight:800; font-size:1.2rem;
+        color:var(--white); margin-bottom:14px;
+      }
+      .footer-tagline { font-size:.84rem; line-height:1.7; margin-bottom:24px; }
+      .footer-socials { display:flex; gap:10px; }
+      .footer-social {
+        width:36px; height:36px; border-radius:50%;
+        border:1px solid rgba(255,255,255,.15);
+        display:flex; align-items:center; justify-content:center;
+        font-size:.9rem; color:rgba(255,255,255,.5);
+        transition:var(--transition);
+      }
+      .footer-social:hover { background:var(--teal); color:var(--white); border-color:var(--teal); }
+
+      .footer-col-title {
+        font-family:var(--font-head); font-size:.85rem; font-weight:700;
+        color:var(--white); margin-bottom:18px;
+      }
+      .footer-links { display:flex; flex-direction:column; gap:10px; }
+      .footer-links a { font-size:.83rem; transition:var(--transition); }
+      .footer-links a:hover { color:var(--teal-light); }
+
+      .footer-bottom {
+        border-top:1px solid rgba(255,255,255,.07);
+        padding:24px 0;
+      }
+      .footer-bottom-inner {
+        display:flex; align-items:center; justify-content:space-between;
+        gap:16px; flex-wrap:wrap;
+      }
+      .footer-copy { font-size:.8rem; }
+      .footer-payments { display:flex; align-items:center; gap:8px; }
+      .payment-badge {
+        background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.1);
+        border-radius:var(--radius-sm); padding:5px 12px;
+        font-size:.75rem; font-weight:700; color:rgba(255,255,255,.7);
+        transition:var(--transition);
+      }
+      .payment-badge:hover { background:rgba(255,255,255,.15); color:var(--white); }
+      .footer-legal { display:flex; gap:16px; }
+      .footer-legal a { font-size:.78rem; transition:var(--transition); }
+      .footer-legal a:hover { color:var(--teal-light); }
+
+      /* ===================== RESPONSIVE ===================== */
+      @media (max-width: 1100px) {
+        .hero-content { grid-template-columns:1fr 400px; gap:40px; }
+        .services-grid { grid-template-columns:repeat(4,1fr); }
+        .destinations-grid { grid-template-columns:repeat(2,1fr); }
+        .deals-grid { grid-template-columns:repeat(2,1fr); }
+        .hotels-grid { grid-template-columns:repeat(2,1fr); }
+        .tours-grid { grid-template-columns:repeat(2,1fr); }
+        .why-grid { grid-template-columns:repeat(2,1fr); }
+        .footer-grid { grid-template-columns:1fr 1fr 1fr; gap:32px; }
+        .footer-brand { grid-column:1/-1; max-width:100%; }
+      }
+      @media (max-width: 800px) {
+        .nav-links { display:none; }
+        .nav-select { display:none; }
+        .nav-sign { display:none; }
+        .hamburger { display:flex; }
+        .hero-content { grid-template-columns:1fr; padding:48px 16px 32px; gap:32px; }
+        .hero-right { order:2; }
+        .hero-title { font-size:2.4rem; }
+        .section-pad { padding:56px 0; }
+        .services-grid { grid-template-columns:repeat(4,1fr); }
+        .destinations-grid { grid-template-columns:1fr; }
+        .deals-grid { grid-template-columns:1fr; }
+        .hotels-grid { grid-template-columns:1fr; }
+        .tours-grid { grid-template-columns:1fr; }
+        .food-grid { grid-template-columns:repeat(2,1fr); }
+        .app-content { grid-template-columns:1fr; gap:40px; }
+        .app-visual { display:none; }
+        .why-grid { grid-template-columns:1fr 1fr; }
+        .footer-grid { grid-template-columns:1fr 1fr; }
+        .footer-brand { grid-column:1/-1; }
+        .footer-bottom-inner { flex-direction:column; text-align:center; }
+        .plans-scroll { grid-template-columns:repeat(3, 320px); }
+      }
+      @media (max-width: 540px) {
+        .container { padding:0 16px; }
+        .hero-title { font-size:2rem; }
+        .hero-stats { gap:20px; }
+        .services-grid { grid-template-columns:repeat(4,1fr); gap:8px; }
+        .service-icon { width:40px; height:40px; font-size:1rem; }
+        .service-name { font-size:.72rem; }
+        .food-grid { grid-template-columns:repeat(2,1fr); }
+        .why-grid { grid-template-columns:1fr; }
+        .plan-filters { gap:6px; }
+        .plan-filter { padding:6px 14px; font-size:.78rem; }
+        .countdown-bar { flex-direction:column; align-items:flex-start; }
+        .search-form-row.cols-2 { grid-template-columns:1fr; }
+        .nav-register { display:none; }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===================== NAVBAR ===================== -->
+    <nav id="navbar" class="transparent">
+      <div class="nav-inner">
+        <a href="#" class="nav-logo">
+          <div class="nav-logo-icon"><i class="fas fa-khanda"></i></div>
+          AngkorTravel
+        </a>
+        <div class="nav-links">
+          <a href="#hotels">Hotels</a>
+          <a href="#hero">Flights</a>
+          <a href="#hero">Bus & Ferry</a>
+          <a href="#tours">Tours</a>
+          <a href="#plans">Travel Plans</a>
+          <a href="#deals">Deals</a>
+        </div>
+        <div class="nav-actions">
+          <select class="nav-select">
+            <option>🌐 EN</option>
+            <option>🇰🇭 KH</option>
+            <option>🇨🇳 CN</option>
+          </select>
+          <select class="nav-select">
+            <option>USD $</option>
+            <option>KHR ៛</option>
+            <option>EUR €</option>
+          </select>
+          <a href="#" class="nav-sign">Sign In</a>
+          <a href="#" class="nav-register btn">Register</a>
+        </div>
+        <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Mobile Nav -->
+    <div class="mobile-nav" id="mobileNav">
+      <a href="#hotels" onclick="toggleMenu()">🏨 Hotels</a>
+      <a href="#hero" onclick="toggleMenu()">✈️ Flights</a>
+      <a href="#hero" onclick="toggleMenu()">🚌 Bus & Ferry</a>
+      <a href="#tours" onclick="toggleMenu()">🗺️ Tours</a>
+      <a href="#plans" onclick="toggleMenu()">📅 Travel Plans</a>
+      <a href="#deals" onclick="toggleMenu()">🔥 Deals</a>
+      <div class="mobile-nav-actions">
+        <a href="#" class="btn btn-outline btn-sm">Sign In</a>
+        <a href="#" class="btn btn-primary btn-sm">Register</a>
+      </div>
+    </div>
+
+    <!-- ===================== HERO ===================== -->
+    <section id="hero">
+      <div class="hero-bg">
+        <div class="hero-bg-img"></div>
+        <div class="hero-shape hero-shape-1"></div>
+        <div class="hero-shape hero-shape-2"></div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-left">
+          <div class="hero-eyebrow">
+            <span class="dot"></span>
+            Cambodia's #1 Travel Platform
+          </div>
+          <h1 class="hero-title">
+            Explore<br /><span>Cambodia</span><br />Easily
+          </h1>
+          <p class="hero-subtitle">
+            Hotels, Flights, Tours, Transport & Ready-Made Cambodia Trips — all
+            in one place. Your perfect Khmer adventure starts here.
+          </p>
+          <div class="hero-ctas">
+            <a href="#plans" class="btn btn-primary btn-lg"
+              ><i class="fas fa-map-marked-alt"></i> View Travel Plans</a
+            >
+            <a
+              href="#destinations"
+              class="btn"
+              style="
+                background: rgba(255, 255, 255, 0.18);
+                color: #fff;
+                backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+              "
+              ><i class="fas fa-compass"></i> Explore Destinations</a
+            >
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="num">500+</div>
+              <div class="lbl">Hotels Listed</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">120+</div>
+              <div class="lbl">Tours & Experiences</div>
+            </div>
+            <div class="hero-stat">
+              <div class="num">50K+</div>
+              <div class="lbl">Happy Travelers</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-right">
+          <div class="search-card">
+            <div class="search-tabs">
+              <div
+                class="search-tab active"
+                onclick="switchTab(this, 'tab-hotels')"
+              >
+                <i class="fas fa-hotel"></i> Hotels
+              </div>
+              <div class="search-tab" onclick="switchTab(this, 'tab-flights')">
+                <i class="fas fa-plane"></i> Flights
+              </div>
+              <div class="search-tab" onclick="switchTab(this, 'tab-bus')">
+                <i class="fas fa-bus"></i> Bus
+              </div>
+              <div class="search-tab" onclick="switchTab(this, 'tab-ferry')">
+                <i class="fas fa-ship"></i> Ferry
+              </div>
+              <div class="search-tab" onclick="switchTab(this, 'tab-tours')">
+                <i class="fas fa-binoculars"></i> Tours
+              </div>
+              <div class="search-tab" onclick="switchTab(this, 'tab-plans')">
+                <i class="fas fa-route"></i> Plans
+              </div>
+            </div>
+
+            <!-- Hotels Tab -->
+            <div class="search-form active" id="tab-hotels">
+              <div class="form-field">
+                <label><i class="fas fa-map-marker-alt"></i> Destination</label>
+                <input
+                  type="text"
+                  placeholder="Siem Reap, Phnom Penh, Koh Rong…"
+                />
+              </div>
+              <div class="search-form-row cols-2">
+                <div class="form-field">
+                  <label><i class="fas fa-calendar"></i> Check-in</label>
+                  <input type="date" />
+                </div>
+                <div class="form-field">
+                  <label><i class="fas fa-calendar"></i> Check-out</label>
+                  <input type="date" />
+                </div>
+              </div>
+              <div class="form-field">
+                <label><i class="fas fa-users"></i> Guests</label>
+                <select>
+                  <option>2 Adults, 1 Room</option>
+                  <option>1 Adult, 1 Room</option>
+                  <option>4 Adults, 2 Rooms</option>
+                </select>
+              </div>
+              <button class="search-btn">
+                <i class="fas fa-search"></i> Search Hotels
+              </button>
+            </div>
+
+            <!-- Flights Tab -->
+            <div class="search-form" id="tab-flights">
+              <div class="search-form-row cols-2">
+                <div class="form-field">
+                  <label><i class="fas fa-plane-departure"></i> From</label>
+                  <input type="text" placeholder="Phnom Penh (PNH)" />
+                </div>
+                <div class="form-field">
+                  <label><i class="fas fa-plane-arrival"></i> To</label>
+                  <input type="text" placeholder="Siem Reap (REP)" />
+                </div>
+              </div>
+              <div class="search-form-row cols-2">
+                <div class="form-field">
+                  <label><i class="fas fa-calendar"></i> Departure</label>
+                  <input type="date" />
+                </div>
+                <div class="form-field">
+                  <label><i class="fas fa-calendar"></i> Return</label>
+                  <input type="date" />
+                </div>
+              </div>
+              <div class="form-field">
+                <label><i class="fas fa-users"></i> Passengers</label>
+                <select>
+                  <option>1 Adult</option>
+                  <option>2 Adults</option>
+                  <option>2 Adults, 1 Child</option>
+                </select>
+              </div>
+              <button class="search-btn">
+                <i class="fas fa-search"></i> Search Flights
+              </button>
+            </div>
+
+            <!-- Bus Tab -->
+            <div class="search-form" id="tab-bus">
+              <div class="search-form-row cols-2">
+                <div class="form-field">
+                  <label><i class="fas fa-map-marker"></i> From</label>
+                  <input type="text" placeholder="Phnom Penh" />
+                </div>
+                <div class="form-field">
+                  <label><i class="fas fa-map-marker-alt"></i> To</label>
+                  <input type="text" placeholder="Siem Reap" />
+                </div>
+              </div>
+              <div class="form-field">
+                <label><i class="fas fa-calendar"></i> Travel Date</label>
+                <input type="date" />
+              </div>
+              <div class="form-field">
+                <label><i class="fas fa-users"></i> Passengers</label>
+                <select>
+                  <option>1 Passenger</option>
+                  <option>2 Passengers</option>
+                  <option>4 Passengers</option>
+                </select>
+              </div>
+              <button class="search-btn">
+                <i class="fas fa-search"></i> Search Bus Tickets
+              </button>
+            </div>
+
+            <!-- Ferry Tab -->
+            <div class="search-form" id="tab-ferry">
+              <div class="search-form-row cols-2">
+                <div class="form-field">
+                  <label><i class="fas fa-anchor"></i> From</label>
+                  <input type="text" placeholder="Sihanoukville" />
+                </div>
+                <div class="form-field">
+                  <label><i class="fas fa-anchor"></i> To</label>
+                  <input type="text" placeholder="Koh Rong" />
+                </div>
+              </div>
+              <div class="form-field">
+                <label><i class="fas fa-calendar"></i> Travel Date</label>
+                <input type="date" />
+              </div>
+              <div class="form-field">
+                <label><i class="fas fa-users"></i> Passengers</label>
+                <select>
+                  <option>2 Adults</option>
+                  <option>1 Adult</option>
+                  <option>Family (4)</option>
+                </select>
+              </div>
+              <button class="search-btn">
+                <i class="fas fa-search"></i> Search Ferry
+              </button>
+            </div>
+
+            <!-- Tours Tab -->
+            <div class="search-form" id="tab-tours">
+              <div class="form-field">
+                <label
+                  ><i class="fas fa-search"></i> Activity or Destination</label
+                >
+                <input
+                  type="text"
+                  placeholder="Angkor Wat, food tour, island hopping…"
+                />
+              </div>
+              <div class="search-form-row cols-2">
+                <div class="form-field">
+                  <label><i class="fas fa-calendar"></i> Tour Date</label>
+                  <input type="date" />
+                </div>
+                <div class="form-field">
+                  <label><i class="fas fa-users"></i> People</label>
+                  <select>
+                    <option>2 People</option>
+                    <option>1 Person</option>
+                    <option>Group (5+)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-field">
+                <label><i class="fas fa-tag"></i> Category</label>
+                <select>
+                  <option>All Tours</option>
+                  <option>Culture & History</option>
+                  <option>Adventure</option>
+                  <option>Food & Local</option>
+                  <option>Nature</option>
+                </select>
+              </div>
+              <button class="search-btn">
+                <i class="fas fa-search"></i> Search Tours
+              </button>
+            </div>
+
+            <!-- Plans Tab -->
+            <div class="search-form" id="tab-plans">
+              <div class="form-field">
+                <label><i class="fas fa-clock"></i> Trip Duration</label>
+                <select>
+                  <option>3 Days</option>
+                  <option>5 Days</option>
+                  <option>7 Days</option>
+                  <option>10 Days</option>
+                  <option>14 Days</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label><i class="fas fa-calendar"></i> Start Date</label>
+                <input type="date" />
+              </div>
+              <div class="search-form-row cols-2">
+                <div class="form-field">
+                  <label><i class="fas fa-tag"></i> Style</label>
+                  <select>
+                    <option>Cultural</option>
+                    <option>Beach</option>
+                    <option>Adventure</option>
+                    <option>Luxury</option>
+                    <option>Budget</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label><i class="fas fa-users"></i> Group</label>
+                  <select>
+                    <option>Couple</option>
+                    <option>Solo</option>
+                    <option>Family</option>
+                    <option>Group</option>
+                  </select>
+                </div>
+              </div>
+              <button class="search-btn">
+                <i class="fas fa-magic"></i> Find My Trip Plan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-scroll">
+        <i class="fas fa-chevron-down"></i>
+        <span>Scroll to explore</span>
+      </div>
+    </section>
+
+    <!-- ===================== TICKER ===================== -->
+    <div class="ticker-bar">
+      <div class="ticker-track">
+        <div class="ticker-item">
+          <i class="fas fa-fire"></i> Flash Deal: 40% OFF Phnom Penh Hotels —
+          Today Only
+        </div>
+        <div class="ticker-item">
+          <i class="fas fa-plane"></i> Flights from $49 — Phnom Penh to Siem
+          Reap
+        </div>
+        <div class="ticker-item">
+          <i class="fas fa-umbrella-beach"></i> Koh Rong 3D2N Package from
+          $89/person
+        </div>
+        <div class="ticker-item">
+          <i class="fas fa-star"></i> New: Angkor Sunrise Private Tour — Limited
+          slots!
+        </div>
+        <div class="ticker-item">
+          <i class="fas fa-fire"></i> Flash Deal: 40% OFF Phnom Penh Hotels —
+          Today Only
+        </div>
+        <div class="ticker-item">
+          <i class="fas fa-plane"></i> Flights from $49 — Phnom Penh to Siem
+          Reap
+        </div>
+        <div class="ticker-item">
+          <i class="fas fa-umbrella-beach"></i> Koh Rong 3D2N Package from
+          $89/person
+        </div>
+        <div class="ticker-item">
+          <i class="fas fa-star"></i> New: Angkor Sunrise Private Tour — Limited
+          slots!
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== QUICK SERVICES ===================== -->
+    <section id="services" class="section-pad-sm">
+      <div class="container">
+        <div class="section-grid">
+          <div class="services-grid">
+            <div class="service-card s1 animate">
+              <div class="service-icon"><i class="fas fa-hotel"></i></div>
+              <div class="service-name">Hotels</div>
+            </div>
+            <div class="service-card s2 animate animate-delay-1">
+              <div class="service-icon"><i class="fas fa-plane"></i></div>
+              <div class="service-name">Flights</div>
+            </div>
+            <div class="service-card s3 animate animate-delay-2">
+              <div class="service-icon"><i class="fas fa-bus"></i></div>
+              <div class="service-name">Bus Tickets</div>
+            </div>
+            <div class="service-card s4 animate animate-delay-3">
+              <div class="service-icon"><i class="fas fa-ship"></i></div>
+              <div class="service-name">Ferry Tickets</div>
+            </div>
+            <div class="service-card s5 animate">
+              <div class="service-icon"><i class="fas fa-binoculars"></i></div>
+              <div class="service-name">Tours</div>
+            </div>
+            <div class="service-card s6 animate animate-delay-1">
+              <div class="service-icon"><i class="fas fa-landmark"></i></div>
+              <div class="service-name">Attractions</div>
+            </div>
+            <div class="service-card s7 animate animate-delay-2">
+              <div class="service-icon"><i class="fas fa-car"></i></div>
+              <div class="service-name">Airport Pickup</div>
+            </div>
+            <div class="service-card s8 animate animate-delay-3">
+              <div class="service-icon"><i class="fas fa-sim-card"></i></div>
+              <div class="service-name">eSIM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DESTINATIONS ===================== -->
+    <section id="destinations" class="section-pad">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <div class="section-tag">
+              <i class="fas fa-map-marked-alt"></i> Popular Destinations
+            </div>
+            <h2 class="section-title">Where Will You Go?</h2>
+            <p class="section-sub">
+              From ancient temples to tropical islands — Cambodia has it all.
+            </p>
+          </div>
+          <a href="#" class="btn-view-all"
+            >View All <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+        <div class="destinations-grid">
+          <div class="dest-card animate">
+            <div class="dest-illus dest-bg-1">
+              <div class="dest-illus-icon">🏛️</div>
+            </div>
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-body">
+              <div class="dest-tag">Most Popular</div>
+              <div class="dest-name">Siem Reap</div>
+              <div class="dest-desc">
+                Gateway to Angkor Wat, the world's largest religious complex
+              </div>
+              <div class="dest-footer">
+                <div class="dest-price">From <strong>$35</strong>/night</div>
+                <div class="dest-explore">
+                  <i class="fas fa-arrow-right"></i> Explore
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dest-card animate animate-delay-1">
+            <div class="dest-illus dest-bg-2">
+              <div class="dest-illus-icon">🌆</div>
+            </div>
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-body">
+              <div class="dest-tag">Capital City</div>
+              <div class="dest-name">Phnom Penh</div>
+              <div class="dest-desc">
+                Vibrant capital with royal palaces, history, and amazing food
+              </div>
+              <div class="dest-footer">
+                <div class="dest-price">From <strong>$28</strong>/night</div>
+                <div class="dest-explore">
+                  <i class="fas fa-arrow-right"></i> Explore
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dest-card animate animate-delay-2">
+            <div class="dest-illus dest-bg-3">
+              <div class="dest-illus-icon">🏝️</div>
+            </div>
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-body">
+              <div class="dest-tag">Best Beaches</div>
+              <div class="dest-name">Koh Rong</div>
+              <div class="dest-desc">
+                Pristine white sand, crystal blue waters & bioluminescent
+                plankton
+              </div>
+              <div class="dest-footer">
+                <div class="dest-price">From <strong>$45</strong>/night</div>
+                <div class="dest-explore">
+                  <i class="fas fa-arrow-right"></i> Explore
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dest-card animate">
+            <div class="dest-illus dest-bg-4">
+              <div class="dest-illus-icon">⛺</div>
+            </div>
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-body">
+              <div class="dest-tag">Hidden Gem</div>
+              <div class="dest-name">Kampot</div>
+              <div class="dest-desc">
+                Laid-back riverside town, pepper farms, and Bokor mountain
+              </div>
+              <div class="dest-footer">
+                <div class="dest-price">From <strong>$20</strong>/night</div>
+                <div class="dest-explore">
+                  <i class="fas fa-arrow-right"></i> Explore
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dest-card animate animate-delay-1">
+            <div class="dest-illus dest-bg-5">
+              <div class="dest-illus-icon">🌿</div>
+            </div>
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-body">
+              <div class="dest-tag">Nature & Wildlife</div>
+              <div class="dest-name">Mondulkiri</div>
+              <div class="dest-desc">
+                Elephant sanctuaries, waterfalls, and indigenous hill tribe
+                culture
+              </div>
+              <div class="dest-footer">
+                <div class="dest-price">From <strong>$22</strong>/night</div>
+                <div class="dest-explore">
+                  <i class="fas fa-arrow-right"></i> Explore
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dest-card animate animate-delay-2">
+            <div class="dest-illus dest-bg-6">
+              <div class="dest-illus-icon">🎨</div>
+            </div>
+            <div class="dest-card-overlay"></div>
+            <div class="dest-card-body">
+              <div class="dest-tag">Arts & Culture</div>
+              <div class="dest-name">Battambang</div>
+              <div class="dest-desc">
+                Colonial heritage, bamboo train, art scene & stunning temples
+              </div>
+              <div class="dest-footer">
+                <div class="dest-price">From <strong>$18</strong>/night</div>
+                <div class="dest-explore">
+                  <i class="fas fa-arrow-right"></i> Explore
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TRAVEL PLANS ===================== -->
+    <section id="plans" class="section-pad">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <div class="section-tag">
+              <i class="fas fa-route"></i> Ready-Made Trips
+            </div>
+            <h2 class="section-title">Ready-to-Go Cambodia Trips</h2>
+            <p class="section-sub">
+              Perfect plans for first-time visitors. Hotel, transport &
+              experiences — all included.
+            </p>
+          </div>
+          <a href="#" class="btn-view-all"
+            >All Plans <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+
+        <div class="plan-filters">
+          <div class="plan-filter active" onclick="filterPlan(this, 'all')">
+            All
+          </div>
+          <div class="plan-filter" onclick="filterPlan(this, 'budget')">
+            💸 Budget
+          </div>
+          <div class="plan-filter" onclick="filterPlan(this, 'luxury')">
+            💎 Luxury
+          </div>
+          <div class="plan-filter" onclick="filterPlan(this, 'family')">
+            👨‍👩‍👧 Family
+          </div>
+          <div class="plan-filter" onclick="filterPlan(this, 'adventure')">
+            🏔️ Adventure
+          </div>
+          <div class="plan-filter" onclick="filterPlan(this, 'beach')">
+            🏖️ Beach
+          </div>
+          <div class="plan-filter" onclick="filterPlan(this, 'culture')">
+            🏛️ Culture
+          </div>
+        </div>
+
+        <div class="plans-scroll" id="plansGrid">
+          <div class="plan-card">
+            <div class="plan-img-bg dest-bg-1">
+              <span style="font-size: 4rem">🏛️</span>
+              <div class="plan-badges">
+                <span class="badge badge-days">3 Days</span>
+                <span class="badge badge-hotel">🏨 Hotel Incl.</span>
+              </div>
+            </div>
+            <div class="plan-body">
+              <div class="plan-type">🌟 Best Seller · Culture</div>
+              <div class="plan-name">3 Days Angkor Escape</div>
+              <div class="plan-timeline">
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 1</div>
+                  <div class="plan-day-loc">Siem Reap</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 2</div>
+                  <div class="plan-day-loc">Angkor</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 3</div>
+                  <div class="plan-day-loc">Tonle Sap</div>
+                </div>
+              </div>
+              <div class="plan-includes">
+                <span class="plan-include"
+                  ><i class="fas fa-hotel"></i> 2N Hotel</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-ticket-alt"></i> Angkor Pass</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-car"></i> Transport</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-user-tie"></i> Guide</span
+                >
+              </div>
+              <div class="plan-footer">
+                <div>
+                  <div class="plan-price-label">From</div>
+                  <div class="plan-price">$189 <span>/ person</span></div>
+                </div>
+                <a href="#" class="btn btn-teal btn-sm">View Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-img-bg dest-bg-2">
+              <span style="font-size: 4rem">🇰🇭</span>
+              <div class="plan-badges">
+                <span class="badge badge-days">7 Days</span>
+                <span class="badge badge-hotel">🏨 Hotel Incl.</span>
+                <span class="badge badge-transport">🚌 Transport Incl.</span>
+              </div>
+            </div>
+            <div class="plan-body">
+              <div class="plan-type">🏆 Top Rated · All Cambodia</div>
+              <div class="plan-name">Cambodia in 1 Week</div>
+              <div class="plan-timeline">
+                <div class="plan-day">
+                  <div class="plan-day-num">D1-2</div>
+                  <div class="plan-day-loc">PP</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">D3-5</div>
+                  <div class="plan-day-loc">Siem Reap</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">D6-7</div>
+                  <div class="plan-day-loc">Kampot</div>
+                </div>
+              </div>
+              <div class="plan-includes">
+                <span class="plan-include"
+                  ><i class="fas fa-hotel"></i> 6N Hotel</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-plane"></i> Flights</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-utensils"></i> Breakfasts</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-user-tie"></i> Guide</span
+                >
+              </div>
+              <div class="plan-footer">
+                <div>
+                  <div class="plan-price-label">From</div>
+                  <div class="plan-price">$549 <span>/ person</span></div>
+                </div>
+                <a href="#" class="btn btn-teal btn-sm">View Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-img-bg dest-bg-3">
+              <span style="font-size: 4rem">🏝️</span>
+              <div class="plan-badges">
+                <span class="badge badge-days">4 Days</span>
+                <span class="badge badge-hotel">🏨 Resort Incl.</span>
+              </div>
+            </div>
+            <div class="plan-body">
+              <div class="plan-type">🌊 Beach Getaway · Island</div>
+              <div class="plan-name">Koh Rong Island Escape</div>
+              <div class="plan-timeline">
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 1</div>
+                  <div class="plan-day-loc">Travel</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">D2-3</div>
+                  <div class="plan-day-loc">Koh Rong</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 4</div>
+                  <div class="plan-day-loc">Return</div>
+                </div>
+              </div>
+              <div class="plan-includes">
+                <span class="plan-include"
+                  ><i class="fas fa-hotel"></i> 3N Resort</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-ship"></i> Ferry</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-fish"></i> Snorkeling</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-umbrella-beach"></i> Island Hop</span
+                >
+              </div>
+              <div class="plan-footer">
+                <div>
+                  <div class="plan-price-label">From</div>
+                  <div class="plan-price">$249 <span>/ person</span></div>
+                </div>
+                <a href="#" class="btn btn-teal btn-sm">View Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-img-bg dest-bg-5">
+              <span style="font-size: 4rem">🐘</span>
+              <div class="plan-badges">
+                <span class="badge badge-days">5 Days</span>
+                <span class="badge badge-hotel">🏨 Hotel Incl.</span>
+                <span class="badge badge-transport">🚗 Private Car</span>
+              </div>
+            </div>
+            <div class="plan-body">
+              <div class="plan-type">🏔️ Adventure · Wilderness</div>
+              <div class="plan-name">Cambodia Adventure Trip</div>
+              <div class="plan-timeline">
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 1</div>
+                  <div class="plan-day-loc">Phnom Penh</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">D2-4</div>
+                  <div class="plan-day-loc">Mondulkiri</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 5</div>
+                  <div class="plan-day-loc">Return</div>
+                </div>
+              </div>
+              <div class="plan-includes">
+                <span class="plan-include"
+                  ><i class="fas fa-hotel"></i> 4N Lodge</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-hiking"></i> Trekking</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-dog"></i> Elephant Sanctuary</span
+                >
+              </div>
+              <div class="plan-footer">
+                <div>
+                  <div class="plan-price-label">From</div>
+                  <div class="plan-price">$349 <span>/ person</span></div>
+                </div>
+                <a href="#" class="btn btn-teal btn-sm">View Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div class="plan-img-bg dest-bg-2">
+              <span style="font-size: 4rem">🌆</span>
+              <div class="plan-badges">
+                <span class="badge badge-days">2 Days</span>
+                <span class="badge badge-hotel">🏨 Hotel Incl.</span>
+              </div>
+            </div>
+            <div class="plan-body">
+              <div class="plan-type">🏙️ Short Break · City</div>
+              <div class="plan-name">Phnom Penh Weekend</div>
+              <div class="plan-timeline">
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 1</div>
+                  <div class="plan-day-loc">History</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">Day 2</div>
+                  <div class="plan-day-loc">Food & Culture</div>
+                </div>
+              </div>
+              <div class="plan-includes">
+                <span class="plan-include"
+                  ><i class="fas fa-hotel"></i> 1N Hotel</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-museum"></i> Museums</span
+                >
+                <span class="plan-include"
+                  ><i class="fas fa-utensils"></i> Food Tour</span
+                >
+              </div>
+              <div class="plan-footer">
+                <div>
+                  <div class="plan-price-label">From</div>
+                  <div class="plan-price">$99 <span>/ person</span></div>
+                </div>
+                <a href="#" class="btn btn-teal btn-sm">View Plan</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="plan-card">
+            <div
+              class="plan-img-bg"
+              style="background: linear-gradient(135deg, #2d1a1a, #4a2a2a)"
+            >
+              <span style="font-size: 4rem">💑</span>
+              <div class="plan-badges">
+                <span class="badge badge-days">6 Days</span>
+                <span class="badge badge-luxury">💎 Luxury</span>
+              </div>
+            </div>
+            <div class="plan-body">
+              <div class="plan-type">💑 Romantic · Luxury</div>
+              <div class="plan-name">Honeymoon Cambodia</div>
+              <div class="plan-timeline">
+                <div class="plan-day">
+                  <div class="plan-day-num">D1-2</div>
+                  <div class="plan-day-loc">Siem Reap</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">D3-4</div>
+                  <div class="plan-day-loc">Koh Rong</div>
+                </div>
+                <div class="plan-day">
+                  <div class="plan-day-num">D5-6</div>
+                  <div class="plan-day-loc">Kampot</div>
+                </div>
+              </div>
+              <div class="plan-includes">
+                <span class="plan-include"
+                  ><i class="fas fa-star"></i> 5★ Hotels</span
+                >
+                <span class="plan-include"><i class="fas fa-spa"></i> Spa</span>
+                <span class="plan-include"
+                  ><i class="fas fa-glass-cheers"></i> Sunset Dinner</span
+                >
+              </div>
+              <div class="plan-footer">
+                <div>
+                  <div class="plan-price-label">From</div>
+                  <div class="plan-price">$899 <span>/ couple</span></div>
+                </div>
+                <a href="#" class="btn btn-teal btn-sm">View Plan</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FLASH DEALS ===================== -->
+    <section id="deals" class="section-pad">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <div class="section-tag">
+              <i class="fas fa-fire"></i> Flash Deals
+            </div>
+            <h2 class="section-title">Limited-Time Offers</h2>
+            <p class="section-sub">
+              Best prices for Cambodia — today only. Don't miss out.
+            </p>
+          </div>
+          <a
+            href="#"
+            class="btn-view-all"
+            style="color: rgba(255, 255, 255, 0.7)"
+            >All Deals <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+
+        <div class="countdown-bar">
+          <span class="countdown-label">⏱ Deals end in:</span>
+          <div class="countdown-timer">
+            <div class="countdown-unit">
+              <div class="countdown-num" id="ch">07</div>
+              <div class="countdown-lbl">HRS</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit">
+              <div class="countdown-num" id="cm">34</div>
+              <div class="countdown-lbl">MIN</div>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-unit">
+              <div class="countdown-num" id="cs">22</div>
+              <div class="countdown-lbl">SEC</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="deals-grid">
+          <div class="deal-card animate">
+            <div class="deal-img-wrap">
+              <div class="deal-img-bg deal-d1"><span>🏨</span></div>
+              <div class="discount-badge">-40%</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-name">Phnom Penh Luxury Hotels</div>
+              <div class="deal-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="deal-rating-num">4.8</span>
+                <span class="deal-rating-cnt">(1,240 reviews)</span>
+              </div>
+              <div class="deal-price-row">
+                <span class="deal-old">$120</span>
+                <span class="deal-new">$72 <span>/ night</span></span>
+              </div>
+              <button class="deal-book">Book Now</button>
+            </div>
+          </div>
+
+          <div class="deal-card animate animate-delay-1">
+            <div class="deal-img-wrap">
+              <div class="deal-img-bg deal-d2"><span>✈️</span></div>
+              <div class="discount-badge">-35%</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-name">Siem Reap Flight Deals</div>
+              <div class="deal-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i>
+                </div>
+                <span class="deal-rating-num">5.0</span>
+                <span class="deal-rating-cnt">(678 reviews)</span>
+              </div>
+              <div class="deal-price-row">
+                <span class="deal-old">$75</span>
+                <span class="deal-new">$49 <span>/ one-way</span></span>
+              </div>
+              <button class="deal-book">Book Now</button>
+            </div>
+          </div>
+
+          <div class="deal-card animate animate-delay-2">
+            <div class="deal-img-wrap">
+              <div class="deal-img-bg deal-d3"><span>🏝️</span></div>
+              <div class="discount-badge">-25%</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-name">Koh Rong Island Package</div>
+              <div class="deal-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i>
+                </div>
+                <span class="deal-rating-num">4.9</span>
+                <span class="deal-rating-cnt">(892 reviews)</span>
+              </div>
+              <div class="deal-price-row">
+                <span class="deal-old">$119</span>
+                <span class="deal-new">$89 <span>/ person</span></span>
+              </div>
+              <button class="deal-book">Book Now</button>
+            </div>
+          </div>
+
+          <div class="deal-card animate">
+            <div class="deal-img-wrap">
+              <div class="deal-img-bg deal-d4"><span>🏛️</span></div>
+              <div class="discount-badge">-30%</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-name">Angkor Temples Private Tour</div>
+              <div class="deal-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star-half-alt"></i>
+                </div>
+                <span class="deal-rating-num">4.7</span>
+                <span class="deal-rating-cnt">(534 reviews)</span>
+              </div>
+              <div class="deal-price-row">
+                <span class="deal-old">$85</span>
+                <span class="deal-new">$59 <span>/ person</span></span>
+              </div>
+              <button class="deal-book">Book Now</button>
+            </div>
+          </div>
+
+          <div class="deal-card animate animate-delay-1">
+            <div class="deal-img-wrap">
+              <div class="deal-img-bg deal-d5"><span>🌊</span></div>
+              <div class="discount-badge">-20%</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-name">Kampot Riverside Retreat</div>
+              <div class="deal-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i>
+                </div>
+                <span class="deal-rating-num">4.8</span>
+                <span class="deal-rating-cnt">(345 reviews)</span>
+              </div>
+              <div class="deal-price-row">
+                <span class="deal-old">$55</span>
+                <span class="deal-new">$44 <span>/ night</span></span>
+              </div>
+              <button class="deal-book">Book Now</button>
+            </div>
+          </div>
+
+          <div class="deal-card animate animate-delay-2">
+            <div class="deal-img-wrap">
+              <div class="deal-img-bg deal-d6"><span>🚌</span></div>
+              <div class="discount-badge">-15%</div>
+            </div>
+            <div class="deal-body">
+              <div class="deal-name">VIP Bus: PP → Siem Reap</div>
+              <div class="deal-rating">
+                <div class="stars">
+                  <i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                  ><i class="far fa-star"></i>
+                </div>
+                <span class="deal-rating-num">4.3</span>
+                <span class="deal-rating-cnt">(1,120 reviews)</span>
+              </div>
+              <div class="deal-price-row">
+                <span class="deal-old">$14</span>
+                <span class="deal-new">$12 <span>/ person</span></span>
+              </div>
+              <button class="deal-book">Book Now</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== HOTELS ===================== -->
+    <section id="hotels" class="section-pad">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <div class="section-tag">
+              <i class="fas fa-hotel"></i> Top Hotels
+            </div>
+            <h2 class="section-title">Handpicked Hotels in Cambodia</h2>
+            <p class="section-sub">
+              Curated stays from budget guesthouses to 5-star resorts.
+            </p>
+          </div>
+          <a href="#" class="btn-view-all"
+            >All Hotels <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+        <div class="hotels-grid">
+          <div class="hotel-card animate">
+            <div class="hotel-img-wrap">
+              <div class="hotel-img-bg h1"><span>🏰</span></div>
+              <div class="hotel-save"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i>
+              </div>
+              <div class="hotel-name">Raffles Grand Hotel d'Angkor</div>
+              <div class="hotel-loc">
+                <i class="fas fa-map-marker-alt"></i> Siem Reap City Centre
+              </div>
+              <div class="hotel-amenities">
+                <div class="hotel-amenity">
+                  <i class="fas fa-swimming-pool"></i> Pool
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-wifi"></i> WiFi
+                </div>
+                <div class="hotel-amenity"><i class="fas fa-spa"></i> Spa</div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-concierge-bell"></i> 24h Service
+                </div>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-rating-box">
+                  <div class="hotel-score">9.2</div>
+                  <div>
+                    <div class="hotel-verdict">Superb</div>
+                    <div class="hotel-reviews">1,240 reviews</div>
+                  </div>
+                </div>
+                <div class="hotel-price-wrap">
+                  <div class="hotel-price-from">From</div>
+                  <div class="hotel-price">$180</div>
+                  <div class="hotel-price-night">/ night</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hotel-card animate animate-delay-1">
+            <div class="hotel-img-wrap">
+              <div class="hotel-img-bg h2"><span>🌅</span></div>
+              <div class="hotel-save"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i>
+              </div>
+              <div class="hotel-name">Phum Baitang Resort</div>
+              <div class="hotel-loc">
+                <i class="fas fa-map-marker-alt"></i> Siem Reap, Near Angkor
+              </div>
+              <div class="hotel-amenities">
+                <div class="hotel-amenity">
+                  <i class="fas fa-swimming-pool"></i> Infinity Pool
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-utensils"></i> Restaurant
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-spa"></i> Khmer Spa
+                </div>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-rating-box">
+                  <div class="hotel-score">9.5</div>
+                  <div>
+                    <div class="hotel-verdict">Exceptional</div>
+                    <div class="hotel-reviews">845 reviews</div>
+                  </div>
+                </div>
+                <div class="hotel-price-wrap">
+                  <div class="hotel-price-from">From</div>
+                  <div class="hotel-price">$320</div>
+                  <div class="hotel-price-night">/ night</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hotel-card animate animate-delay-2">
+            <div class="hotel-img-wrap">
+              <div class="hotel-img-bg h3"><span>🌴</span></div>
+              <div class="hotel-save"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+              <div class="hotel-name">Song Saa Private Island</div>
+              <div class="hotel-loc">
+                <i class="fas fa-map-marker-alt"></i> Koh Rong Archipelago
+              </div>
+              <div class="hotel-amenities">
+                <div class="hotel-amenity">
+                  <i class="fas fa-water"></i> Overwater Villas
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-fish"></i> Diving
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-cocktail"></i> Beach Bar
+                </div>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-rating-box">
+                  <div class="hotel-score">9.8</div>
+                  <div>
+                    <div class="hotel-verdict">Exceptional</div>
+                    <div class="hotel-reviews">312 reviews</div>
+                  </div>
+                </div>
+                <div class="hotel-price-wrap">
+                  <div class="hotel-price-from">From</div>
+                  <div class="hotel-price">$680</div>
+                  <div class="hotel-price-night">/ night</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hotel-card animate">
+            <div class="hotel-img-wrap">
+              <div class="hotel-img-bg h4"><span>🏙️</span></div>
+              <div class="hotel-save"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i>
+              </div>
+              <div class="hotel-name">Rosewood Phnom Penh</div>
+              <div class="hotel-loc">
+                <i class="fas fa-map-marker-alt"></i> Phnom Penh, Daun Penh
+              </div>
+              <div class="hotel-amenities">
+                <div class="hotel-amenity">
+                  <i class="fas fa-swimming-pool"></i> Rooftop Pool
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-wine-glass"></i> Sky Bar
+                </div>
+                <div class="hotel-amenity"><i class="fas fa-spa"></i> Spa</div>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-rating-box">
+                  <div class="hotel-score">9.3</div>
+                  <div>
+                    <div class="hotel-verdict">Superb</div>
+                    <div class="hotel-reviews">678 reviews</div>
+                  </div>
+                </div>
+                <div class="hotel-price-wrap">
+                  <div class="hotel-price-from">From</div>
+                  <div class="hotel-price">$250</div>
+                  <div class="hotel-price-night">/ night</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hotel-card animate animate-delay-1">
+            <div class="hotel-img-wrap">
+              <div class="hotel-img-bg h5"><span>🌿</span></div>
+              <div class="hotel-save"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+              <div class="hotel-name">Cardamom Tented Camp</div>
+              <div class="hotel-loc">
+                <i class="fas fa-map-marker-alt"></i> Koh Kong, Cardamoms
+              </div>
+              <div class="hotel-amenities">
+                <div class="hotel-amenity">
+                  <i class="fas fa-tree"></i> Jungle Tents
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-hiking"></i> Trekking
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-star"></i> Stargazing
+                </div>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-rating-box">
+                  <div class="hotel-score">9.0</div>
+                  <div>
+                    <div class="hotel-verdict">Superb</div>
+                    <div class="hotel-reviews">210 reviews</div>
+                  </div>
+                </div>
+                <div class="hotel-price-wrap">
+                  <div class="hotel-price-from">From</div>
+                  <div class="hotel-price">$145</div>
+                  <div class="hotel-price-night">/ night</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hotel-card animate animate-delay-2">
+            <div class="hotel-img-wrap">
+              <div class="hotel-img-bg h6"><span>🎨</span></div>
+              <div class="hotel-save"><i class="far fa-heart"></i></div>
+            </div>
+            <div class="hotel-body">
+              <div class="hotel-stars">
+                <i class="fas fa-star"></i><i class="fas fa-star"></i
+                ><i class="fas fa-star"></i><i class="fas fa-star"></i>
+              </div>
+              <div class="hotel-name">The Sangker Villa</div>
+              <div class="hotel-loc">
+                <i class="fas fa-map-marker-alt"></i> Battambang, Riverside
+              </div>
+              <div class="hotel-amenities">
+                <div class="hotel-amenity">
+                  <i class="fas fa-swimming-pool"></i> Pool
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-bicycle"></i> Bike Rentals
+                </div>
+                <div class="hotel-amenity">
+                  <i class="fas fa-utensils"></i> Khmer Kitchen
+                </div>
+              </div>
+              <div class="hotel-footer">
+                <div class="hotel-rating-box">
+                  <div class="hotel-score">8.8</div>
+                  <div>
+                    <div class="hotel-verdict">Excellent</div>
+                    <div class="hotel-reviews">456 reviews</div>
+                  </div>
+                </div>
+                <div class="hotel-price-wrap">
+                  <div class="hotel-price-from">From</div>
+                  <div class="hotel-price">$68</div>
+                  <div class="hotel-price-night">/ night</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== TOURS ===================== -->
+    <section id="tours" class="section-pad">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <div class="section-tag">
+              <i class="fas fa-binoculars"></i> Tours & Experiences
+            </div>
+            <h2 class="section-title">Unforgettable Cambodia Experiences</h2>
+            <p class="section-sub">
+              Local guides, small groups, authentic moments.
+            </p>
+          </div>
+          <a href="#" class="btn-view-all"
+            >All Tours <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+        <div class="tours-grid">
+          <div class="tour-card animate">
+            <div class="tour-img-bg t1">
+              <span>🌅</span>
+              <div class="tour-cat">Cultural</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-name">Angkor Wat Sunrise Private Tour</div>
+              <div class="tour-meta">
+                <div class="tour-meta-item">
+                  <i class="fas fa-clock"></i> 7 hours
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-users"></i> Max 6 pax
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-map-marker-alt"></i> Siem Reap
+                </div>
+              </div>
+              <div class="tour-footer">
+                <div class="tour-rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                  <span class="tour-rating-num">4.9</span>
+                </div>
+                <div class="tour-price">$65 <span>/ person</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-card animate animate-delay-1">
+            <div class="tour-img-bg t2">
+              <span>🍜</span>
+              <div class="tour-cat">Food & Local</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-name">Phnom Penh Street Food Night Tour</div>
+              <div class="tour-meta">
+                <div class="tour-meta-item">
+                  <i class="fas fa-clock"></i> 3 hours
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-users"></i> Max 10 pax
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-map-marker-alt"></i> Phnom Penh
+                </div>
+              </div>
+              <div class="tour-footer">
+                <div class="tour-rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="tour-rating-num">4.7</span>
+                </div>
+                <div class="tour-price">$29 <span>/ person</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-card animate animate-delay-2">
+            <div class="tour-img-bg t3">
+              <span>🐠</span>
+              <div class="tour-cat">Water & Beach</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-name">Koh Rong Island Hopping & Snorkeling</div>
+              <div class="tour-meta">
+                <div class="tour-meta-item">
+                  <i class="fas fa-clock"></i> Full day
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-users"></i> Max 12 pax
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-map-marker-alt"></i> Koh Rong
+                </div>
+              </div>
+              <div class="tour-footer">
+                <div class="tour-rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                  <span class="tour-rating-num">5.0</span>
+                </div>
+                <div class="tour-price">$45 <span>/ person</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-card animate">
+            <div class="tour-img-bg t4">
+              <span>⛵</span>
+              <div class="tour-cat">River</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-name">Mekong River Sunset Cruise</div>
+              <div class="tour-meta">
+                <div class="tour-meta-item">
+                  <i class="fas fa-clock"></i> 2 hours
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-users"></i> Max 20 pax
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-map-marker-alt"></i> Phnom Penh
+                </div>
+              </div>
+              <div class="tour-footer">
+                <div class="tour-rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                  <span class="tour-rating-num">4.8</span>
+                </div>
+                <div class="tour-price">$35 <span>/ person</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-card animate animate-delay-1">
+            <div class="tour-img-bg t5">
+              <span>🐘</span>
+              <div class="tour-cat">Wildlife</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-name">Mondulkiri Elephant Sanctuary Day</div>
+              <div class="tour-meta">
+                <div class="tour-meta-item">
+                  <i class="fas fa-clock"></i> Full day
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-users"></i> Max 8 pax
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-map-marker-alt"></i> Mondulkiri
+                </div>
+              </div>
+              <div class="tour-footer">
+                <div class="tour-rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star-half-alt"></i>
+                  </div>
+                  <span class="tour-rating-num">4.8</span>
+                </div>
+                <div class="tour-price">$89 <span>/ person</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tour-card animate animate-delay-2">
+            <div class="tour-img-bg t6">
+              <span>⛰️</span>
+              <div class="tour-cat">Nature</div>
+            </div>
+            <div class="tour-body">
+              <div class="tour-name">Kulen Mountain & Waterfall Trek</div>
+              <div class="tour-meta">
+                <div class="tour-meta-item">
+                  <i class="fas fa-clock"></i> 9 hours
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-users"></i> Max 8 pax
+                </div>
+                <div class="tour-meta-item">
+                  <i class="fas fa-map-marker-alt"></i> Siem Reap
+                </div>
+              </div>
+              <div class="tour-footer">
+                <div class="tour-rating">
+                  <div class="stars">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i><i class="fas fa-star"></i
+                    ><i class="fas fa-star"></i>
+                  </div>
+                  <span class="tour-rating-num">4.9</span>
+                </div>
+                <div class="tour-price">$72 <span>/ person</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOD & EXPERIENCES ===================== -->
+    <section id="food" class="section-pad-sm">
+      <div class="container">
+        <div class="section-header-row">
+          <div>
+            <div class="section-tag">
+              <i class="fas fa-utensils"></i> Khmer Food
+            </div>
+            <h2 class="section-title">Taste Cambodia</h2>
+            <p class="section-sub">
+              Discover the unique flavors of Khmer cuisine on your trip.
+            </p>
+          </div>
+        </div>
+        <div class="food-grid">
+          <div class="food-card animate">
+            <div class="food-img f1"><span>🐟</span></div>
+            <div class="food-body">
+              <div class="food-name">Fish Amok</div>
+              <div class="food-desc">
+                Cambodia's signature dish — coconut curry steamed in banana
+                leaf. A national treasure.
+              </div>
+            </div>
+          </div>
+          <div class="food-card animate animate-delay-1">
+            <div class="food-img f2"><span>🥩</span></div>
+            <div class="food-body">
+              <div class="food-name">Lok Lak</div>
+              <div class="food-desc">
+                Stir-fried beef with pepper sauce, served over rice with fresh
+                lime and egg.
+              </div>
+            </div>
+          </div>
+          <div class="food-card animate animate-delay-2">
+            <div class="food-img f3"><span>🔥</span></div>
+            <div class="food-body">
+              <div class="food-name">Khmer BBQ</div>
+              <div class="food-desc">
+                Grill-your-own meats and seafood over charcoal with peanut
+                dipping sauce.
+              </div>
+            </div>
+          </div>
+          <div class="food-card animate animate-delay-3">
+            <div class="food-img f4"><span>🌮</span></div>
+            <div class="food-body">
+              <div class="food-name">Nom Banh Chok</div>
+              <div class="food-desc">
+                Rice noodles in fish-based green curry sauce — the ultimate
+                Khmer breakfast.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== APP SECTION ===================== -->
+    <section id="app-section" class="section-pad">
+      <div class="container">
+        <div class="app-content">
+          <div class="app-text">
+            <div class="section-tag">
+              <i class="fas fa-mobile-alt"></i> Download App
+            </div>
+            <h2 class="section-title">Book Cambodia in Your Pocket</h2>
+            <p class="section-sub">
+              Download the AngkorTravel app. Get mobile-only discounts, offline
+              maps, and instant booking confirmation.
+            </p>
+            <div class="app-features">
+              <div class="app-feature">
+                <div class="app-feature-icon"><i class="fas fa-bolt"></i></div>
+                <div class="app-feature-text">
+                  <strong>Instant Booking</strong>
+                  <span
+                    >Confirm hotels, tours, and transport in under 60
+                    seconds</span
+                  >
+                </div>
+              </div>
+              <div class="app-feature">
+                <div class="app-feature-icon"><i class="fas fa-map"></i></div>
+                <div class="app-feature-text">
+                  <strong>Offline Cambodia Maps</strong>
+                  <span
+                    >Navigate without WiFi — your full itinerary works
+                    offline</span
+                  >
+                </div>
+              </div>
+              <div class="app-feature">
+                <div class="app-feature-icon"><i class="fas fa-tag"></i></div>
+                <div class="app-feature-text">
+                  <strong>App-Only Deals</strong>
+                  <span>Exclusive discounts up to 20% for app users only</span>
+                </div>
+              </div>
+            </div>
+            <div class="app-download-btns">
+              <div class="app-store-btn">
+                <i class="fab fa-apple"></i>
+                <div>
+                  <div class="line1">Download on the</div>
+                  <div class="line2">App Store</div>
+                </div>
+              </div>
+              <div class="app-store-btn">
+                <i class="fab fa-google-play"></i>
+                <div>
+                  <div class="line1">Get it on</div>
+                  <div class="line2">Google Play</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="app-visual">
+            <div class="app-mockup">📱</div>
+            <div class="qr-wrap">
+              <div class="qr-code"></div>
+              <div class="qr-label">Scan to<br />Download</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WHY US ===================== -->
+    <section id="why" class="section-pad">
+      <div class="container">
+        <div class="section-header" style="text-align: center">
+          <div class="section-tag" style="margin: 0 auto 16px">
+            <i class="fas fa-shield-alt"></i> Why AngkorTravel
+          </div>
+          <h2 class="section-title">Book with Confidence</h2>
+          <p class="section-sub" style="margin: 0 auto">
+            Trusted by 50,000+ travelers visiting Cambodia every year.
+          </p>
+        </div>
+        <div class="why-grid">
+          <div class="why-card w1 animate">
+            <div class="why-icon"><i class="fas fa-tag"></i></div>
+            <div class="why-title">Best Price Guarantee</div>
+            <div class="why-desc">
+              We match any lower price you find. Book with us and never overpay
+              for Cambodia travel again.
+            </div>
+          </div>
+          <div class="why-card w2 animate animate-delay-1">
+            <div class="why-icon"><i class="fas fa-map-marked-alt"></i></div>
+            <div class="why-title">Local Cambodia Experts</div>
+            <div class="why-desc">
+              Our team lives in Cambodia. We know every hidden gem, temple, and
+              beach worth visiting.
+            </div>
+          </div>
+          <div class="why-card w3 animate animate-delay-2">
+            <div class="why-icon"><i class="fas fa-lock"></i></div>
+            <div class="why-title">Secure Booking</div>
+            <div class="why-desc">
+              SSL-encrypted payments via ABA, Visa, Mastercard & Wing. Your data
+              is always protected.
+            </div>
+          </div>
+          <div class="why-card w4 animate animate-delay-3">
+            <div class="why-icon"><i class="fas fa-headset"></i></div>
+            <div class="why-title">24/7 Support</div>
+            <div class="why-desc">
+              Our Cambodia-based support team is available around the clock via
+              chat, call, or email.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer id="footer">
+      <div class="footer-top">
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-brand">
+              <div class="footer-logo">
+                <div class="nav-logo-icon"><i class="fas fa-khanda"></i></div>
+                AngkorTravel
+              </div>
+              <p class="footer-tagline">
+                Cambodia's leading travel booking platform. From Angkor Wat to
+                Koh Rong — we make every Cambodia journey extraordinary.
+              </p>
+              <div class="footer-socials">
+                <a href="#" class="footer-social"
+                  ><i class="fab fa-facebook-f"></i
+                ></a>
+                <a href="#" class="footer-social"
+                  ><i class="fab fa-instagram"></i
+                ></a>
+                <a href="#" class="footer-social"
+                  ><i class="fab fa-twitter"></i
+                ></a>
+                <a href="#" class="footer-social"
+                  ><i class="fab fa-tiktok"></i
+                ></a>
+                <a href="#" class="footer-social"
+                  ><i class="fab fa-youtube"></i
+                ></a>
+              </div>
+            </div>
+
+            <div>
+              <div class="footer-col-title">Company</div>
+              <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Our Team</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+                <a href="#">Blog</a>
+              </div>
+            </div>
+
+            <div>
+              <div class="footer-col-title">Support</div>
+              <div class="footer-links">
+                <a href="#">Help Centre</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Live Chat</a>
+                <a href="#">Cancellations</a>
+                <a href="#">Complaints</a>
+              </div>
+            </div>
+
+            <div>
+              <div class="footer-col-title">Destinations</div>
+              <div class="footer-links">
+                <a href="#">Siem Reap</a>
+                <a href="#">Phnom Penh</a>
+                <a href="#">Koh Rong</a>
+                <a href="#">Kampot</a>
+                <a href="#">Mondulkiri</a>
+              </div>
+            </div>
+
+            <div>
+              <div class="footer-col-title">Policies</div>
+              <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Cookie Policy</a>
+                <a href="#">Refund Policy</a>
+                <a href="#">Partner With Us</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container">
+          <div class="footer-bottom-inner">
+            <div class="footer-copy">
+              © 2025 AngkorTravel Co., Ltd. All rights reserved. Phnom Penh,
+              Cambodia.
+            </div>
+            <div class="footer-payments">
+              <div class="payment-badge">ABA</div>
+              <div class="payment-badge">VISA</div>
+              <div class="payment-badge">MC</div>
+              <div class="payment-badge">WING</div>
+              <div class="payment-badge">PI PAY</div>
+            </div>
+            <div class="footer-legal">
+              <a href="#">Privacy</a>
+              <a href="#">Terms</a>
+              <a href="#">Cookies</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- ===================== JAVASCRIPT ===================== -->
+    <script>
+      // ---- Navbar scroll behavior ----
+      const navbar = document.getElementById("navbar");
+      function handleScroll() {
+        if (window.scrollY > 60) {
+          navbar.classList.add("scrolled");
+          navbar.classList.remove("transparent");
+        } else {
+          navbar.classList.remove("scrolled");
+          navbar.classList.add("transparent");
+        }
+      }
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      handleScroll();
+
+      // ---- Mobile menu ----
+      function toggleMenu() {
+        const menu = document.getElementById("mobileNav");
+        const ham = document.getElementById("hamburger");
+        menu.classList.toggle("open");
+        ham.classList.toggle("open");
+      }
+
+      // ---- Search tab switcher ----
+      function switchTab(el, tabId) {
+        document
+          .querySelectorAll(".search-tab")
+          .forEach((t) => t.classList.remove("active"));
+        document
+          .querySelectorAll(".search-form")
+          .forEach((f) => f.classList.remove("active"));
+        el.classList.add("active");
+        document.getElementById(tabId).classList.add("active");
+      }
+
+      // ---- Plan filter ----
+      function filterPlan(el, filter) {
+        document
+          .querySelectorAll(".plan-filter")
+          .forEach((f) => f.classList.remove("active"));
+        el.classList.add("active");
+        // visual-only demo; in production this would filter data
+      }
+
+      // ---- Countdown Timer ----
+      let totalSec = 7 * 3600 + 34 * 60 + 22;
+      function updateCountdown() {
+        if (totalSec <= 0) return;
+        totalSec--;
+        const h = String(Math.floor(totalSec / 3600)).padStart(2, "0");
+        const m = String(Math.floor((totalSec % 3600) / 60)).padStart(2, "0");
+        const s = String(totalSec % 60).padStart(2, "0");
+        const ch = document.getElementById("ch");
+        const cm = document.getElementById("cm");
+        const cs = document.getElementById("cs");
+        if (ch) ch.textContent = h;
+        if (cm) cm.textContent = m;
+        if (cs) cs.textContent = s;
+      }
+      setInterval(updateCountdown, 1000);
+
+      // ---- Scroll animations ----
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -40px 0px" },
+      );
+      document
+        .querySelectorAll(".animate")
+        .forEach((el) => observer.observe(el));
+
+      // ---- Plans horizontal scroll drag ----
+      const plansScroll = document.getElementById("plansGrid");
+      if (plansScroll) {
+        let isDown = false,
+          startX,
+          scrollLeft;
+        plansScroll.addEventListener("mousedown", (e) => {
+          isDown = true;
+          plansScroll.style.cursor = "grabbing";
+          startX = e.pageX - plansScroll.offsetLeft;
+          scrollLeft = plansScroll.scrollLeft;
+        });
+        plansScroll.addEventListener("mouseleave", () => {
+          isDown = false;
+          plansScroll.style.cursor = "grab";
+        });
+        plansScroll.addEventListener("mouseup", () => {
+          isDown = false;
+          plansScroll.style.cursor = "grab";
+        });
+        plansScroll.addEventListener("mousemove", (e) => {
+          if (!isDown) return;
+          e.preventDefault();
+          const x = e.pageX - plansScroll.offsetLeft;
+          plansScroll.scrollLeft = scrollLeft - (x - startX) * 1.2;
+        });
+      }
+
+      // ---- Hotel save (like) button toggle ----
+      document.querySelectorAll(".hotel-save").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const icon = btn.querySelector("i");
+          icon.classList.toggle("far");
+          icon.classList.toggle("fas");
+          icon.style.color = icon.classList.contains("fas") ? "#EF5350" : "";
+        });
+      });
+
+      // ---- Smooth close mobile nav when scrolling ----
+      window.addEventListener(
+        "scroll",
+        () => {
+          const mobileNav = document.getElementById("mobileNav");
+          if (mobileNav.classList.contains("open")) {
+            mobileNav.classList.remove("open");
+            document.getElementById("hamburger").classList.remove("open");
+          }
+        },
+        { passive: true },
+      );
+
+      // ---- Date inputs default to tomorrow / day after ----
+      function setDefaultDates() {
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        const dayAfter = new Date(today);
+        dayAfter.setDate(today.getDate() + 4);
+        const fmt = (d) => d.toISOString().split("T")[0];
+        document.querySelectorAll('input[type="date"]').forEach((inp, i) => {
+          inp.value = i % 2 === 0 ? fmt(tomorrow) : fmt(dayAfter);
+          inp.min = fmt(today);
+        });
+      }
+      setDefaultDates();
+    </script>
+  </body>
+</html>
